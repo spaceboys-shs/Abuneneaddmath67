@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en" class="h-screen overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title matching your team name: SPACEBOYS -->
+    <title>SPACEBOYS</title>
+    
+    <!-- Tab Favicon updated to your GitHub Pages Logo Link -->
+    <link class="rounded-full" rel="icon" type="image/jpeg" href="https://clma2010.github.io/SPACEBOYS/image_36d3e9.jpg" onerror="this.href='https://spaceboys.github.io/logo.jpg'">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spaceDark: '#020208',
+                        spaceNavy: '#050515',
+                        spaceBlue: '#0c0c2b',
+                        orbitGold: '#f09f2d',
+                        neonCyan: '#06b6d4',
+                        cosmicPurple: '#8b5cf6',
+                        nebulaTeal: '#10b981'
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modern futuristic scanlines and tech details */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.15) 50%
+            );
+            background-size: 100% 4px;
+        }
+
+        /* Glassmorphism custom design token */
+        .glass-panel {
+            background: rgba(3, 3, 10, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-active {
+            border-color: rgba(240, 159, 45, 0.4);
+            box-shadow: 0 0 20px rgba(240, 159, 45, 0.1);
+        }
+        /* Interactive grid background behind main panels */
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        }
+        /* Premium holographic glow effects */
+        .holo-glow-cyan {
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+        }
+        .holo-glow-gold {
+            box-shadow: 0 0 35px rgba(240, 159, 45, 0.2);
+        }
+        /* Navigation link design */
+        .nav-link-active {
+            color: #f09f2d !important;
+            border-color: #f09f2d !important;
+            text-shadow: 0 0 10px rgba(240, 159, 45, 0.5);
+        }
+        /* Custom scrollbar for clean inner containers */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(240, 159, 45, 0.3);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(240, 159, 45, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-spaceDark text-gray-100 font-sans antialiased selection:bg-orbitGold selection:text-spaceDark h-screen flex flex-col overflow-hidden tech-grid scanlines relative">
+
+    <!-- REAL-TIME PROCEDURAL TWINKLING GALAXY BACKGROUND CANVAS -->
+    <canvas id="galaxy-canvas" class="fixed inset-0 w-full h-full -z-10 pointer-events-none"></canvas>
+
+    <!-- HUD BACKGROUND GRADIENT OVERLAYS -->
+    <div class="absolute inset-0 bg-gradient-to-tr from-spaceNavy/30 via-transparent to-spaceDark/40 pointer-events-none z-0"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="w-full z-50 glass-panel border-b border-white/10 shrink-0 relative">
+        <div class="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-orbitGold/50 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Brand Link / Logo -->
+            <a href="#about" class="flex items-center gap-3 group shrink-0">
+                <!-- Mini Tech HUD Vector Logo -->
+                <div class="w-11 h-11 rounded-xl border border-orbitGold/30 relative flex items-center justify-center bg-spaceNavy overflow-hidden shrink-0 transition-transform duration-300 group-hover:rotate-12">
+                    <!-- Direct Link used for Header navigation icon -->
+                    <img src="https://clma2010.github.io/Clarence-Lee/Spaceboys%20team%20logo.jpg" alt="SPACEBOYS mini logo" class="w-full h-full object-cover rounded-lg">
+                </div>
+                <div>
+                    <span class="font-orbitron font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-orbitGold">SPACEBOYS</span>
+                    <span class="block text-[9px] text-neonCyan font-bold uppercase tracking-widest -mt-1 font-orbitron">SMK Sacred Heart</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center gap-1.5 h-full">
+                <a href="#about" data-target="about" class="nav-link px-4 py-2 rounded-lg font-orbitron text-xs tracking-widest text-gray-400 hover:text-white hover:bg-white/5 border border-transparent transition-all">ABOUT US</a>
+                <a href="#team" data-target="team" class="nav-link px-4 py-2 rounded-lg font-orbitron text-xs tracking-widest text-gray-400 hover:text-white hover:bg-white/5 border border-transparent transition-all">THE CREW</a>
+                <a href="#projects" data-target="projects" class="nav-link px-4 py-2 rounded-lg font-orbitron text-xs tracking-widest text-gray-400 hover:text-white hover:bg-white/5 border border-transparent transition-all">PROJECTS</a>
+                <a href="#game" data-target="game" class="nav-link px-4 py-2 rounded-lg font-orbitron text-xs tracking-widest text-gray-400 hover:text-white hover:bg-white/5 border border-transparent transition-all">MINI-GAME</a>
+                <a href="#achievements" data-target="achievements" class="nav-link px-4 py-2 rounded-lg font-orbitron text-xs tracking-widest text-gray-400 hover:text-white hover:bg-white/5 border border-transparent transition-all">MISSION LOG</a>
+                <a href="#contact" class="px-5 py-2 rounded-lg bg-gradient-to-r from-orbitGold to-amber-600 text-spaceDark font-orbitron font-bold text-xs tracking-wider hover:shadow-lg hover:shadow-orbitGold/30 transition-all transform hover:-translate-y-0.5">LAUNCH COMMS</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-btn" class="lg:hidden p-2.5 rounded-lg border border-white/10 text-gray-300 hover:text-orbitGold focus:outline-none" aria-label="Toggle navigation menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden px-4 pt-2 pb-6 glass-panel border-t border-white/10 space-y-3 absolute top-20 inset-x-0 z-50">
+            <a href="#about" data-target="about" class="mobile-nav-link block font-orbitron text-sm tracking-widest text-gray-300 hover:text-orbitGold py-2 border-b border-white/5">ABOUT US</a>
+            <a href="#team" data-target="team" class="mobile-nav-link block font-orbitron text-sm tracking-widest text-gray-300 hover:text-orbitGold py-2 border-b border-white/5">THE CREW</a>
+            <a href="#projects" class="mobile-nav-link block font-orbitron text-sm tracking-widest text-gray-300 hover:text-orbitGold py-2 border-b border-white/5">PROJECTS</a>
+            <a href="#game" class="mobile-nav-link block font-orbitron text-sm tracking-widest text-gray-300 hover:text-orbitGold py-2 border-b border-white/5">MINI-GAME</a>
+            <a href="#achievements" class="mobile-nav-link block font-orbitron text-sm tracking-widest text-gray-300 hover:text-orbitGold py-2 border-b border-white/5">MISSION LOG</a>
+            <a href="#contact" class="block text-center w-full py-3 rounded-xl bg-gradient-to-r from-orbitGold to-amber-600 text-spaceDark font-orbitron font-bold text-sm tracking-widest mt-4">LAUNCH COMMS</a>
+        </div>
+    </header>
+
+    <!-- CONTENT VIEWS CONTAINER -->
+    <main class="flex-1 relative overflow-hidden w-full z-10 font-sans">
+
+        <!-- VIEW 1: ABOUT US -->
+        <section id="view-about" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-0 custom-scroll flex items-center justify-center">
+            <div class="max-w-7xl mx-auto min-h-full flex items-center justify-center">
+                <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center py-8">
+                    
+                    <!-- Left Info Panel -->
+                    <div class="lg:col-span-7 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur">
+                            <span class="w-2.5 h-2.5 rounded-full bg-orbitGold animate-ping"></span>
+                            <span class="text-xs font-orbitron tracking-widest text-orbitGold font-bold uppercase">SYSTEM STATUS: ONLINE</span>
+                        </div>
+                        
+                        <h2 class="text-sm sm:text-base font-orbitron font-semibold tracking-widest text-neonCyan uppercase">
+                            ORIGIN PROTOCOL: <span class="text-white border-b border-neonCyan/50 pb-0.5">SMK Sacred Heart</span>
+                        </h2>
+                        
+                        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-orbitron font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-orbitGold mt-4 leading-none select-none filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                            SPACEBOYS
+                        </h1>
+                        
+                        <p class="text-gray-300 mt-6 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                            We are an elite student-led innovation and tech assembly. Operating out of SMK Sacred Heart, we push the physical and digital frontiers, engineering computational and robotic paradigms designed for tomorrow's orbits.
+                        </p>
+
+                        <!-- Cyberpunk Visual Stat Bar indicators -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 max-w-xl mx-auto lg:mx-0 text-left">
+                            <div class="p-4 rounded-2xl glass-panel border-white/5 relative overflow-hidden group hover:border-neonCyan/40 transition-all">
+                                <div class="absolute top-0 right-0 w-12 h-12 bg-neonCyan/5 rounded-bl-full pointer-events-none"></div>
+                                <span class="block font-orbitron font-extrabold text-neonCyan text-2xl sm:text-3xl">06</span>
+                                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold font-orbitron block mt-1">Specialists</span>
+                                <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden"><div class="w-full h-full bg-neonCyan"></div></div>
+                            </div>
+                            <div class="p-4 rounded-2xl glass-panel border-white/5 relative overflow-hidden group hover:border-orbitGold/40 transition-all">
+                                <div class="absolute top-0 right-0 w-12 h-12 bg-orbitGold/5 rounded-bl-full pointer-events-none"></div>
+                                <span class="block font-orbitron font-extrabold text-orbitGold text-2xl sm:text-3xl">04+</span>
+                                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold font-orbitron block mt-1">Deployments</span>
+                                <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden"><div class="w-[80%] h-full bg-orbitGold"></div></div>
+                            </div>
+                            <div class="p-4 rounded-2xl glass-panel border-white/5 relative overflow-hidden group hover:border-cosmicPurple/40 transition-all">
+                                <div class="absolute top-0 right-0 w-12 h-12 bg-cosmicPurple/5 rounded-bl-full pointer-events-none"></div>
+                                <span class="block font-orbitron font-extrabold text-cosmicPurple text-2xl sm:text-3xl">100%</span>
+                                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold font-orbitron block mt-1">Sync Ratio</span>
+                                <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden"><div class="w-full h-full bg-cosmicPurple animate-pulse"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Action Button Group -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-10">
+                            <a href="#team" class="w-full sm:w-auto px-8 py-4 text-center rounded-xl bg-gradient-to-r from-orbitGold to-amber-500 text-spaceDark font-orbitron font-extrabold text-sm tracking-widest hover:shadow-xl hover:shadow-orbitGold/30 transition-all transform hover:-translate-y-0.5">EXPLORE THE CREW</a>
+                            <a href="#projects" class="w-full sm:w-auto px-8 py-4 text-center rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-orbitron font-bold text-sm tracking-widest transition-all">VIEW GAME LAB</a>
+                        </div>
+                    </div>
+
+                    <!-- Right Visual Panel (Holographic HUD frame hosting your direct logo URL) -->
+                    <div class="lg:col-span-5 flex flex-col items-center justify-center relative mt-10 lg:mt-0">
+                        <!-- Hologram Container -->
+                        <div class="relative z-10 w-80 h-80 sm:w-96 sm:h-[384px] rounded-full holo-glow-gold bg-spaceNavy/50 overflow-hidden flex items-center justify-center border border-orbitGold/40 p-2">
+                            <!-- Tactical scanning details -->
+                            <div class="absolute inset-0 rounded-full border border-orbitGold/10 animate-pulse pointer-events-none"></div>
+                            <div class="absolute inset-4 rounded-full border border-dashed border-neonCyan/20 animate-[spin_60s_linear_infinite] pointer-events-none"></div>
+                            
+                            <!-- Direct GitHub Pages logo image loaded perfectly -->
+                            <img src="https://clma2010.github.io/Clarence-Lee/Spaceboys%20team%20logo.jpg" alt="SPACEBOYS Team Logo Mascot" class="w-full h-full object-cover rounded-full transition-transform duration-500 hover:scale-105 shadow-2xl">
+                        </div>
+                        
+                        <!-- Mascot Nameplate Banner -->
+                        <div class="mt-6 px-6 py-2 rounded-xl bg-spaceNavy border border-orbitGold/30 text-center relative z-20 shadow-lg flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-orbitGold animate-ping"></span>
+                            <span class="font-orbitron font-black text-white text-xs tracking-widest uppercase">COGNITIVE TEAM MASCOT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: THE CREW (Beautiful Independent Grid Layout - Biometrics Side Panel Deleted) -->
+        <section id="view-team" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-12 hidden custom-scroll">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orbitGold/10 border border-orbitGold/20 mb-4">
+                        <span class="text-xs font-orbitron tracking-widest text-orbitGold uppercase">ROSTER LIST</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                        THE FLIGHT CREW
+                    </h2>
+                    <div class="w-16 h-1 bg-orbitGold mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <!-- Beautiful Standalone Full Width Grid Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Member 1: Abraham Ting Lik Yue -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                AT
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">TEAM LEADER / DEV</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Abraham Ting</h3>
+                                <p class="text-xs text-gray-400 font-light">Lik Yue</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Spearheads game architecture, system logic, and microgravity simulation algorithms inside 30 Days in ISS.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">GAME DESIGN</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">ZERO-G LOGIC</span>
+                        </div>
+                    </div>
+
+                    <!-- Member 2: Samuel Kong Bang Kiet -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                SK
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">HARDWARE LEAD / MATH</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Samuel Kong</h3>
+                                <p class="text-xs text-gray-400 font-light">Bang Kiet</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Designs interactive micro-controller adapters and mechanical layout formulas for simulator controls.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">IOT INTEGRATION</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">HARDWARE</span>
+                        </div>
+                    </div>
+
+                    <!-- Member 3: Clarence Lee Meng An -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                CL
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">LEAD PROGRAMMER</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Clarence Lee</h3>
+                                <p class="text-xs text-gray-400 font-light">Meng An</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Calculates microgravity vector mathematics, zero-g physics constraints, and constructs stem-based mission scripts.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">PHYSICS CONST</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">ENGINE PROGRAM</span>
+                        </div>
+                    </div>
+
+                    <!-- Member 4: Kelvin Ling Li Jie -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                KL
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">CREATIVE DIRECTOR</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Kelvin Ling</h3>
+                                <p class="text-xs text-gray-400 font-light">Li Jie</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Designs highly immersive HUD interfaces, space capsule interior modules, and astronaut character templates.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">HUD INTERFACE</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">3D ASSETS</span>
+                        </div>
+                    </div>
+
+                    <!-- Member 5: Nathanael Issac Ling Sze Hsien -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                NL
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">STEM TASK DESIGNER</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Nathanael Issac</h3>
+                                <p class="text-xs text-gray-400 font-light">Ling Sze Hsien</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Configures analytical STEM problems and teamwork mission pipelines for real-time multiplayer trials.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">ANALYTICS</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">STEM PATHS</span>
+                        </div>
+                    </div>
+
+                    <!-- Member 6: Ezra Ling Sing Yi -->
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-orbitGold/40 hover:shadow-2xl hover:shadow-orbitGold/5">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orbitGold/5 rounded-bl-full pointer-events-none transition-all duration-300 group-hover:bg-orbitGold/10"></div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-tr from-orbitGold to-yellow-500 flex items-center justify-center font-orbitron font-black text-spaceDark text-2xl shadow-lg shrink-0">
+                                EL
+                            </div>
+                            <div>
+                                <span class="block text-[11px] font-orbitron font-bold tracking-widest text-orbitGold uppercase">COMMS & BRANDING</span>
+                                <h3 class="text-lg font-bold font-orbitron text-white">Ezra Ling</h3>
+                                <p class="text-xs text-gray-400 font-light">Sing Yi</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Drives outreach strategy, presentation logs, and community interactions for the Sarawak Space Challenge.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">OUTREACH</span>
+                            <span class="px-2.5 py-1 text-[10px] font-orbitron tracking-wider text-neonCyan rounded bg-white/5 font-semibold">BRANDING</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: PROJECTS -->
+        <section id="view-projects" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-12 hidden custom-scroll">
+            <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orbitGold/10 border border-orbitGold/20 mb-4">
+                            <span class="text-xs font-orbitron tracking-widest text-orbitGold uppercase">SIMULATOR ARCHIVE</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-orbitron font-black uppercase tracking-tight text-white">
+                            30 DAYS IN ISS
+                        </h2>
+                        <div class="w-16 h-1 bg-orbitGold mt-4 rounded-full"></div>
+                    </div>
+                    <p class="text-gray-300 max-w-md text-sm sm:text-base leading-relaxed">
+                        An educational space simulator game built for the Sarawak Space Challenge by Team SPACEBOYS, an award-winning group of young innovators from SMK Sacred Heart in Sibu, Sarawak.
+                    </p>
+                </div>
+
+                <!-- Game Highlights Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Highlight 1 -->
+                    <div class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between h-full border border-white/5 hover:border-orbitGold/30 transition-all duration-300">
+                        <div>
+                            <div class="h-48 bg-gradient-to-tr from-spaceNavy to-cosmicPurple relative flex items-center justify-center p-8 overflow-hidden">
+                                <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(255,255,255,0.03)_1px,_transparent_1px)] bg-[size:20px_20px]"></div>
+                                <svg class="w-24 h-24 text-orbitGold/20 group-hover:scale-110 transition-transform duration-500 absolute" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.64 8.38m9.97 3.41a14.99 14.99 0 01-13.31 9.97M14.99 11.73a14.99 14.99 0 00-9.97 13.31"/></svg>
+                                <div class="relative z-10 text-center">
+                                    <span class="px-3 py-1 rounded bg-orbitGold/20 text-orbitGold font-orbitron font-bold text-[10px] tracking-widest uppercase">PHYSICS SIMULATION</span>
+                                    <h4 class="text-white font-orbitron font-extrabold text-2xl tracking-wide mt-2">MICROGRAVITY</h4>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-orbitron font-bold text-lg text-white mb-2">Zero-G Floating Dynamics</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                                    The game features unique real-time physics. You float around the space station modules and perform scientific equipment maintenance, experiencing space exploration just like real astronauts do in orbit.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-neonCyan font-orbitron">SYSTEM: REALTIME ZERO-G</span>
+                        </div>
+                    </div>
+
+                    <!-- Highlight 2 -->
+                    <div class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between h-full border border-white/5 hover:border-neonCyan/30 transition-all duration-300">
+                        <div>
+                            <div class="h-48 bg-gradient-to-tr from-spaceNavy to-blue-900 relative flex items-center justify-center p-8 overflow-hidden">
+                                <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(255,255,255,0.03)_1px,_transparent_1px)] bg-[size:20px_20px]"></div>
+                                <svg class="w-24 h-24 text-blue-500/15 group-hover:scale-110 transition-transform duration-500 absolute" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253"/></svg>
+                                <div class="relative z-10 text-center">
+                                    <span class="px-3 py-1 rounded bg-blue-500/20 text-blue-400 font-orbitron font-bold text-[10px] tracking-widest uppercase">EDUCATIONAL METRIC</span>
+                                    <h4 class="text-white font-orbitron font-extrabold text-2xl tracking-wide mt-2">STEM MISSIONS</h4>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-orbitron font-bold text-lg text-white mb-2">Space-Themed Technical Tasks</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                                    Players learn critical science, technology, engineering, and mathematics concepts in an exciting way. Solve power routing, trajectory equations, and ecosystem maintenance problems to survive your stay.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-neonCyan font-orbitron">MISSION: EDUCATION PROTOCOL</span>
+                        </div>
+                    </div>
+
+                    <!-- Highlight 3 -->
+                    <div class="glass-card rounded-3xl overflow-hidden group flex flex-col justify-between h-full border border-white/5 hover:border-nebulaTeal/30 transition-all duration-300">
+                        <div>
+                            <div class="h-48 bg-gradient-to-tr from-spaceNavy to-nebulaTeal/30 relative flex items-center justify-center p-8 overflow-hidden">
+                                <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(255,255,255,0.03)_1px,_transparent_1px)] bg-[size:20px_20px]"></div>
+                                <svg class="w-24 h-24 text-nebulaTeal/15 group-hover:scale-110 transition-transform duration-500 absolute" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3M12 5.25a6.75 6.75 0 00-6.75 6.75c0 3.728 3.022 6.75 6.75 6.75s6.75-3.022 6.75-6.75A6.75 6.75 0 0012 5.25z"/></svg>
+                                <div class="relative z-10 text-center">
+                                    <span class="px-3 py-1 rounded bg-nebulaTeal/20 text-nebulaTeal font-orbitron font-bold text-[10px] tracking-widest uppercase">COOPERATIVE TRIALS</span>
+                                    <h4 class="text-white font-orbitron font-extrabold text-2xl tracking-wide mt-2">TEAMWORK</h4>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-orbitron font-bold text-lg text-white mb-2">Multiplayer Crew Synchronization</h3>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                                    The simulator is built to teach players how to coordinate together. Work in synchronization to resolve sudden hull decompressions, navigation system failures, and oxygen supply emergencies in real-time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-neonCyan font-orbitron">OBJECTIVE: HIGH SYNCHRONY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 6: MINI-GAME -->
+        <section id="view-game" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-12 hidden custom-scroll">
+            <div class="max-w-4xl mx-auto min-h-full flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orbitGold/10 border border-orbitGold/20 mb-3">
+                        <span class="text-xs font-orbitron tracking-widest text-orbitGold uppercase">RECREATION BAY</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-orbitron font-black uppercase tracking-tight text-white">
+                        ZERO-G PROTO RUNNER
+                    </h2>
+                    <div class="w-16 h-1 bg-orbitGold mx-auto mt-2 rounded-full"></div>
+                    <p class="text-gray-400 max-w-md mx-auto text-xs sm:text-sm mt-2 leading-relaxed">
+                        Control the SPACEBOYS astronaut. Dodge dangerous space debris and harvest glowing energy cores to keep your thrusters powered!
+                    </p>
+                </div>
+
+                <!-- Game Container -->
+                <div class="relative w-full max-w-xl mx-auto glass-panel rounded-3xl border border-white/10 overflow-hidden flex flex-col items-center p-4">
+                    <!-- Score & Stats Bar -->
+                    <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 items-center px-4 py-2.5 bg-spaceDark/50 rounded-xl border border-white/5 mb-4 text-[10px] sm:text-xs font-orbitron">
+                        <div class="flex items-center gap-1.5 justify-start">
+                            <span class="text-gray-400">SCORE:</span>
+                            <span id="game-score" class="text-orbitGold font-bold text-sm">0</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1.5 justify-start sm:justify-center">
+                            <span class="text-gray-400">MODE:</span>
+                            <span id="hud-difficulty-display" class="font-extrabold tracking-wider">MEDIUM</span>
+                        </div>
+
+                        <div class="flex items-center gap-1.5 justify-start sm:justify-center">
+                            <span class="text-gray-400">SHIELD:</span>
+                            <div class="flex gap-1" id="game-lives">
+                                <span class="w-2.5 h-2.5 bg-neonCyan rounded-full animate-pulse"></span>
+                                <span class="w-2.5 h-2.5 bg-neonCyan rounded-full animate-pulse"></span>
+                                <span class="w-2.5 h-2.5 bg-neonCyan rounded-full animate-pulse"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-1.5 justify-end">
+                            <span class="text-gray-400">HI SCORE:</span>
+                            <span id="game-high-score" class="text-white font-bold">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Area -->
+                    <div class="relative w-full h-[320px] bg-[#020208]/90 rounded-2xl overflow-hidden border border-white/5">
+                        <canvas id="mini-game-canvas" class="w-full h-full block"></canvas>
+                        
+                        <!-- Start / Game Over Screens overlay -->
+                        <div id="game-screen-overlay" class="absolute inset-0 bg-spaceDark/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-30">
+                            
+                            <!-- START GAME STATE PANEL -->
+                            <div id="game-start-state" class="flex flex-col items-center w-full">
+                                <h3 class="font-orbitron font-black text-xl sm:text-2xl text-orbitGold mb-2">READY FOR DEPLOYMENT?</h3>
+                                
+                                <!-- Tactical Difficulty Level Selector Buttons inside start interface -->
+                                <div class="mb-6 w-full max-w-xs">
+                                    <span class="block text-[9px] font-orbitron tracking-widest text-gray-500 uppercase mb-2">SELECT DIFFICULTY SECTOR:</span>
+                                    <div class="grid grid-cols-3 gap-2">
+                                        <button onclick="setDifficulty('easy')" id="diff-btn-easy" class="py-2 rounded-lg font-orbitron font-extrabold text-[10px] tracking-wider border border-[#10b981]/20 bg-[#10b981]/5 text-[#10b981] hover:bg-[#10b981]/15 transition-all">
+                                            EASY
+                                        </button>
+                                        <button onclick="setDifficulty('medium')" id="diff-btn-medium" class="py-2 rounded-lg font-orbitron font-extrabold text-[10px] tracking-wider border border-[#f09f2d]/50 bg-[#f09f2d]/20 text-[#f09f2d] hover:bg-[#f09f2d]/30 transition-all">
+                                            MEDIUM
+                                        </button>
+                                        <button onclick="setDifficulty('hard')" id="diff-btn-hard" class="py-2 rounded-lg font-orbitron font-extrabold text-[10px] tracking-wider border border-[#ef4444]/20 bg-[#ef4444]/5 text-[#ef4444] hover:bg-[#ef4444]/15 transition-all">
+                                            HARD
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <p class="text-gray-400 text-xs max-w-sm mb-6 leading-relaxed">
+                                    Use <kbd class="px-1.5 py-0.5 bg-white/10 rounded text-white font-sans">Left / Right</kbd> arrows, keypad buttons, or A/D to float, dodge asteroids, and harvest glowing cyan cores!
+                                </p>
+                                <button id="start-game-btn" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-orbitGold to-amber-600 text-spaceDark font-orbitron font-extrabold tracking-widest text-xs hover:shadow-lg hover:shadow-orbitGold/20 transform hover:-translate-y-0.5 transition-all">
+                                    INITIATE LAUNCH
+                                </button>
+                            </div>
+
+                            <!-- GAME OVER SCORE REPORT PANEL -->
+                            <div id="game-score-state" class="hidden flex flex-col items-center w-full max-w-sm">
+                                <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/30 mb-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                                    <span class="text-[9px] font-orbitron font-bold text-red-400 tracking-wider">MISSION TERMINATED</span>
+                                </div>
+                                <h3 class="font-orbitron font-black text-2xl text-white mb-4">FLIGHT DEBRIEFING</h3>
+                                
+                                <!-- Holographic Score Card -->
+                                <div class="w-full bg-spaceDark/80 border border-white/10 rounded-2xl p-5 mb-5 space-y-4 relative">
+                                    <div class="absolute top-0 right-0 w-16 h-16 bg-white/[0.02] rounded-bl-full pointer-events-none"></div>
+                                    
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                                        <span class="text-gray-400 text-xs font-orbitron">DIFFICULTY:</span>
+                                        <span id="score-report-difficulty" class="font-orbitron font-bold text-xs uppercase tracking-widest">MEDIUM</span>
+                                    </div>
+                                    
+                                    <div class="text-center py-2">
+                                        <span class="text-[10px] font-orbitron tracking-widest text-gray-400 block mb-1">FINAL HARVEST SCORE</span>
+                                        <span id="score-report-final" class="text-5xl font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-orbitGold via-amber-300 to-white drop-shadow-[0_4px_10px_rgba(240,159,45,0.4)]">0</span>
+                                        <span class="text-xs text-orbitGold font-bold font-orbitron ml-1">PTS</span>
+                                    </div>
+
+                                    <div class="flex justify-between items-center border-t border-white/5 pt-3">
+                                        <span class="text-gray-400 text-xs font-orbitron">ASTRONAUT RANK:</span>
+                                        <span id="score-report-rank" class="font-orbitron font-black text-xs text-neonCyan tracking-wider uppercase">CADET</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="grid grid-cols-2 gap-3 w-full">
+                                    <button onclick="startGameDirect()" class="py-3 rounded-xl bg-gradient-to-r from-neonCyan to-cyan-500 text-spaceDark font-orbitron font-black text-[10px] tracking-wider hover:shadow-lg hover:shadow-neonCyan/20 transform hover:-translate-y-0.5 transition-all">
+                                        DEPLOY AGAIN
+                                    </button>
+                                    <button onclick="returnToMenu()" class="py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-orbitron font-black text-[10px] tracking-wider transition-all">
+                                        RECONFIGURE
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Touch Controls for Mobile (glowing tactile buttons) -->
+                    <div class="w-full flex justify-center gap-6 mt-4 lg:hidden">
+                        <button id="touch-left" class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-neonCyan active:bg-neonCyan/20 active:scale-95 transition-all select-none focus:outline-none">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                        </button>
+                        <button id="touch-right" class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-neonCyan active:bg-neonCyan/20 active:scale-95 transition-all select-none focus:outline-none">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: MISSION LOG -->
+        <section id="view-achievements" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-12 hidden custom-scroll">
+            <div class="max-w-5xl mx-auto flex flex-col justify-center min-h-full">
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orbitGold/10 border border-orbitGold/20 mb-4">
+                        <span class="text-xs font-orbitron tracking-widest text-orbitGold uppercase">MISSION MILESTONES</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-black uppercase tracking-tight text-white">
+                        MISSION LOGS
+                    </h2>
+                    <div class="w-16 h-1 bg-orbitGold mt-4 rounded-full"></div>
+                </div>
+
+                <!-- Vertical Timeline Structure -->
+                <div class="relative border-l-2 border-dashed border-orbitGold/30 ml-4 md:ml-32 py-4 space-y-12 overflow-hidden">
+                    <!-- Timeline Item 1 -->
+                    <div class="relative pl-8 md:pl-12 group">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-spaceDark border-4 border-orbitGold flex items-center justify-center group-hover:scale-125 transition-transform"></div>
+                        <div class="hidden md:block absolute right-full mr-12 top-0 text-right w-24">
+                            <span class="font-orbitron font-bold text-orbitGold text-sm">FEB 2026</span>
+                            <span class="block text-[10px] text-gray-500 uppercase">LAUNCHED</span>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <span class="md:hidden text-xs font-orbitron font-bold text-orbitGold block mb-2">FEB 2026</span>
+                            <h3 class="text-lg font-bold font-orbitron text-white">Team Init & Formation</h3>
+                            <p class="text-gray-400 text-sm mt-2 leading-relaxed font-light">
+                                Formally assembled the SPACEBOYS crew inside SMK Sacred Heart. Defined roles, set communication guidelines, and configured our visual branding system.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative pl-8 md:pl-12 group">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-spaceDark border-4 border-orbitGold flex items-center justify-center group-hover:scale-125 transition-transform"></div>
+                        <div class="hidden md:block absolute right-full mr-12 top-0 text-right w-24">
+                            <span class="font-orbitron font-bold text-orbitGold text-sm">APR 2026</span>
+                            <span class="block text-[10px] text-gray-500 uppercase">CONSTRUCTION</span>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <span class="md:hidden text-xs font-orbitron font-bold text-orbitGold block mb-2">APR 2026</span>
+                            <h3 class="text-lg font-bold font-orbitron text-white">First Hardware Workshop</h3>
+                            <p class="text-gray-400 text-sm mt-2 leading-relaxed font-light">
+                                Organized collaborative technical build sessions for solar telemetry designs, assembling structural casings and testing microcontroller communication paths.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative pl-8 md:pl-12 group">
+                        <div class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-spaceDark border-4 border-orbitGold flex items-center justify-center group-hover:scale-125 transition-transform"></div>
+                        <div class="hidden md:block absolute right-full mr-12 top-0 text-right w-24">
+                            <span class="font-orbitron font-bold text-orbitGold text-sm">JUN 2026</span>
+                            <span class="block text-[10px] text-gray-500 uppercase">DEMO REVEAL</span>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <span class="md:hidden text-xs font-orbitron font-bold text-orbitGold block mb-2">JUN 2026</span>
+                            <h3 class="text-lg font-bold font-orbitron text-white">SMK Sacred Heart Exhibition</h3>
+                            <p class="text-gray-400 text-sm mt-2 leading-relaxed font-light">
+                                Revealed prototype models during the school's tech event. Gathered peer feedback, evaluated telemetry records, and finalized interface blueprints.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 5: COMMS & INTERACTIVE FEEDBACK CONSOLE -->
+        <section id="view-contact" class="view-panel absolute inset-0 w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-12 hidden custom-scroll">
+            <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center">
+                <!-- Outer split grid layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    
+                    <!-- Left Column: Interactive Simulation Feedback Module -->
+                    <div class="lg:col-span-6">
+                        <div class="glass-panel rounded-3xl p-6 md:p-8 border border-white/10 h-full flex flex-col justify-between">
+                            <div class="space-y-5">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-lg bg-orbitGold/10 border border-orbitGold/30 flex items-center justify-center text-orbitGold">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499c-.195-.383-.687-.383-.882 0L8.723 7.55l-4.475.65c-.424.062-.592.583-.285.883l3.238 3.155-.764 4.457c-.072.422.375.74.755.542l4.017-2.112 4.017 2.112c.38.198.827-.118.755-.542l-.764-4.457 3.238-3.155c.307-.3.139-.821-.285-.883l-4.475-.65-1.975-4.051z"/></svg>
+                                    </div>
+                                    <h3 class="font-orbitron font-extrabold text-lg text-white">30 DAYS IN ISS REVIEW</h3>
+                                </div>
+                                
+                                <p class="text-xs text-gray-400 leading-relaxed font-light">
+                                    We value your feedback! Rate your training simulation experience below and help the SPACEBOYS crew optimize the simulator vectors.
+                                </p>
+                                
+                                <!-- Cosmic Rating Star telemetry -->
+                                <div class="space-y-1">
+                                    <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400">Cosmic Satisfaction Index:</label>
+                                    <div class="flex items-center gap-3">
+                                        <!-- Interactive SVG Stars -->
+                                        <button onclick="setFeedbackRating(1)" id="feedback-star-1" class="hover:scale-110 transition-transform focus:outline-none" style="color: #4b5563;">
+                                            <svg class="w-7 h-7 stroke-current fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                        </button>
+                                        <button onclick="setFeedbackRating(2)" id="feedback-star-2" class="hover:scale-110 transition-transform focus:outline-none" style="color: #4b5563;">
+                                            <svg class="w-7 h-7 stroke-current fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                        </button>
+                                        <button onclick="setFeedbackRating(3)" id="feedback-star-3" class="hover:scale-110 transition-transform focus:outline-none" style="color: #4b5563;">
+                                            <svg class="w-7 h-7 stroke-current fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                        </button>
+                                        <button onclick="setFeedbackRating(4)" id="feedback-star-4" class="hover:scale-110 transition-transform focus:outline-none" style="color: #4b5563;">
+                                            <svg class="w-7 h-7 stroke-current fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                        </button>
+                                        <button onclick="setFeedbackRating(5)" id="feedback-star-5" class="hover:scale-110 transition-transform focus:outline-none" style="color: #4b5563;">
+                                            <svg class="w-7 h-7 stroke-current fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                        </button>
+                                        <span id="feedback-rating-label" class="text-xs font-orbitron font-extrabold text-gray-500 uppercase ml-2">--</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Category select tags -->
+                                <div class="space-y-2">
+                                    <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400">Target System Evaluated:</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="toggleFeedbackCategory('physics')" id="f-cat-physics" class="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[9px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none">
+                                            Zero-G Physics
+                                        </button>
+                                        <button onclick="toggleFeedbackCategory('stem')" id="f-cat-stem" class="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[9px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none">
+                                            STEM Missions
+                                        </button>
+                                        <button onclick="toggleFeedbackCategory('ui')" id="f-cat-ui" class="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[9px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none">
+                                            Graphics & HUD
+                                        </button>
+                                        <button onclick="toggleFeedbackCategory('bg')" id="f-cat-bg" class="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[9px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none">
+                                            Galaxy Background
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Astro Identifiers Grid (NEW!) -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 animate-fade-in">
+                                    <div>
+                                        <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400 mb-1">Astro Name</label>
+                                        <input id="feedback-name-input" type="text" class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-orbitGold transition-all font-sans" placeholder="AstroBoy">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400 mb-1">Astro Email</label>
+                                        <input id="feedback-email-input" type="text" class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-orbitGold transition-all font-sans" placeholder="astro@orbit.com">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400 mb-1">Frequency (Phone)</label>
+                                        <input id="feedback-phone-input" type="text" class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-orbitGold transition-all font-sans" placeholder="+60123456789">
+                                    </div>
+                                </div>
+                                
+                                <!-- Feedback remarks text -->
+                                <div>
+                                    <label class="block text-[9px] font-orbitron uppercase tracking-wider text-gray-400 mb-1.5">Simulator Logs Remarks:</label>
+                                    <textarea id="feedback-message-input" rows="2" class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-orbitGold transition-all resize-none font-sans" placeholder="Write your review, bugs, or feature suggestions..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Futuristic Alert HUD Banner instead of browser alerts -->
+                            <div id="feedback-error-log" class="hidden text-[10px] text-red-500 font-orbitron font-bold uppercase tracking-wider bg-red-950/40 border border-red-500/20 p-3 rounded-xl mt-3 animate-pulse"></div>
+
+                            <button onclick="submitFeedbackForm()" class="w-full mt-4 py-3.5 rounded-xl bg-gradient-to-r from-neonCyan to-cyan-500 text-spaceDark font-orbitron font-extrabold tracking-widest text-[10px] hover:shadow-lg hover:shadow-neonCyan/20 transform hover:-translate-y-0.5 transition-all">
+                                SUBMIT SYSTEM FEEDBACK
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Contact Form -->
+                    <div class="lg:col-span-6">
+                        <form id="contact-form" class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 flex flex-col h-full justify-between" onsubmit="handleFormSubmit(event)">
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-lg bg-orbitGold/10 border border-orbitGold/30 flex items-center justify-center text-orbitGold">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                                    </div>
+                                    <h3 class="font-orbitron font-extrabold text-lg text-white">DIRECT SATELLITE COMMS</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs font-orbitron uppercase text-gray-400 mb-2 font-semibold">Sender Name</label>
+                                        <input type="text" required class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-orbitGold transition-colors" placeholder="e.g. Captain Rogers">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-orbitron uppercase text-gray-400 mb-2 font-semibold">Sub-Sector Email</label>
+                                        <input type="email" required class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-orbitGold transition-colors" placeholder="e.g. rogers@orbit.com">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-orbitron uppercase text-gray-400 mb-2 font-semibold">Mission Subject</label>
+                                    <input type="text" required class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-orbitGold transition-colors" placeholder="e.g. Collaboration Request">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-orbitron uppercase text-gray-400 mb-2 font-semibold">Transmission Message</label>
+                                    <textarea rows="4" required class="w-full bg-spaceDark/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-orbitGold transition-colors resize-none" placeholder="Provide full telemetry parameters here..."></textarea>
+                                </div>
+                            </div>
+
+                            <div id="form-status" class="hidden text-xs font-semibold px-4 py-3 rounded-lg text-spaceDark bg-orbitGold animate-pulse font-orbitron">
+                                Sending package...
+                            </div>
+
+                            <button type="submit" class="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-orbitGold to-yellow-600 text-spaceDark font-orbitron font-extrabold tracking-widest text-sm hover:shadow-xl hover:shadow-orbitGold/20 transform hover:-translate-y-0.5 transition-all">
+                                LAUNCH SATELLITE MESSAGE
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SUCCESS NOTIFICATION MODAL -->
+    <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4 animate-fade-in">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl text-center border border-orbitGold/30 relative">
+            <div class="w-16 h-16 bg-orbitGold/10 rounded-full flex items-center justify-center text-orbitGold mx-auto mb-6">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-orbitron font-extrabold text-2xl text-white mb-2">TRANSMISSION DELIVERED</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                Your message package has successfully traversed the school sub-space channels and landed in the SPACEBOYS logs. Expect orbital feedback shortly!
+            </p>
+            <button onclick="closeModal()" class="px-6 py-3 rounded-xl bg-orbitGold text-spaceDark font-orbitron font-bold text-xs tracking-wider uppercase hover:bg-yellow-400 transition-colors w-full">
+                DISMISS SYSTEM COMM
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIC (INCLUDING ROUTING & REALTIME GALAXY BACKGROUND & MINI GAME ENGINE) -->
+    <script>
+        // --- REALTIME PROCEDURAL TWINKLING GALAXY BACKGROUND ENGINE ---
+        let bgCtx, bgStars = [];
+
+        function initGalaxyBg() {
+            const canvas = document.getElementById('galaxy-canvas');
+            if (!canvas) return;
+            
+            bgCtx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                generateGalaxyStars(canvas.width, canvas.height);
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            animateGalaxy();
+        }
+
+        function generateGalaxyStars(w, h) {
+            bgStars = [];
+            // Dynamically scale star count based on resolution
+            const count = Math.min(Math.floor((w * h) / 2500), 500); 
+            
+            // Standard background stars
+            for (let i = 0; i < count; i++) {
+                bgStars.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: Math.random() * 1.5 + 0.3,
+                    opacity: Math.random() * 0.7 + 0.3,
+                    twinkleSpeed: 0.01 + Math.random() * 0.03,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+            
+            // Major twinkling bright stars with glow flares
+            for (let i = 0; i < 35; i++) {
+                bgStars.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: Math.random() * 2.2 + 1.5,
+                    opacity: Math.random() * 0.85 + 0.15,
+                    twinkleSpeed: 0.005 + Math.random() * 0.015,
+                    phase: Math.random() * Math.PI * 2,
+                    flare: true
+                });
+            }
+        }
+
+        let galaxyAngle = 0;
+        function animateGalaxy() {
+            if (!bgCtx || !bgCtx.canvas) return;
+            const w = bgCtx.canvas.width;
+            const h = bgCtx.canvas.height;
+            
+            // 1. Draw Space Dark Vacuum Base
+            bgCtx.globalCompositeOperation = 'source-over';
+            bgCtx.fillStyle = '#010106';
+            bgCtx.fillRect(0, 0, w, h);
+            
+            // 2. Draw Realistic Swirling Cosmic Nebula Gas Clouds
+            bgCtx.globalCompositeOperation = 'screen';
+            
+            // Vivid Purple Gas Nebula (Top Left)
+            let purpleGlow = bgCtx.createRadialGradient(w * 0.18, h * 0.28, 0, w * 0.18, h * 0.28, Math.max(w, h) * 0.65);
+            purpleGlow.addColorStop(0, 'rgba(139, 92, 246, 0.26)');
+            purpleGlow.addColorStop(0.5, 'rgba(139, 92, 246, 0.08)');
+            purpleGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            bgCtx.fillStyle = purpleGlow;
+            bgCtx.fillRect(0, 0, w, h);
+            
+            // Cyber Cyan Gas Nebula (Bottom Right)
+            let cyanGlow = bgCtx.createRadialGradient(w * 0.85, h * 0.72, 0, w * 0.85, h * 0.72, Math.max(w, h) * 0.65);
+            cyanGlow.addColorStop(0, 'rgba(6, 182, 212, 0.22)');
+            cyanGlow.addColorStop(0.5, 'rgba(6, 182, 212, 0.07)');
+            cyanGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            bgCtx.fillStyle = cyanGlow;
+            bgCtx.fillRect(0, 0, w, h);
+
+            // Starlight Pink / Magenta Gas (Top Right)
+            let pinkGlow = bgCtx.createRadialGradient(w * 0.78, h * 0.18, 0, w * 0.78, h * 0.18, Math.max(w, h) * 0.5);
+            pinkGlow.addColorStop(0, 'rgba(236, 72, 153, 0.14)');
+            pinkGlow.addColorStop(0.5, 'rgba(236, 72, 153, 0.04)');
+            pinkGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            bgCtx.fillStyle = pinkGlow;
+            bgCtx.fillRect(0, 0, w, h);
+
+            // Warm Amber Stellar Core (Bottom Left)
+            let amberGlow = bgCtx.createRadialGradient(w * 0.32, h * 0.82, 0, w * 0.32, h * 0.82, Math.max(w, h) * 0.5);
+            amberGlow.addColorStop(0, 'rgba(240, 159, 45, 0.09)');
+            amberGlow.addColorStop(0.5, 'rgba(240, 159, 45, 0.02)');
+            amberGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            bgCtx.fillStyle = amberGlow;
+            bgCtx.fillRect(0, 0, w, h);
+
+            // 3. Draw a realistic, slowly rotating spiral galaxy structure in the center background
+            bgCtx.save();
+            bgCtx.translate(w / 2, h / 2);
+            bgCtx.rotate(galaxyAngle);
+            galaxyAngle += 0.00025; // Slow majestic rotation
+            
+            const arms = 4;
+            const pointsPerArm = 200;
+            const maxRadius = Math.min(w, h) * 0.5;
+            
+            // Draw gaseous spiral dust clouds - FIXED Infinite loop syntax error
+            for (let arm = 0; arm < arms; arm++) {
+                const armOffset = (arm * Math.PI * 2) / arms;
+                for (let i = 0; i < pointsPerArm; i += 6) {
+                    const percent = i / pointsPerArm;
+                    const r = percent * maxRadius;
+                    // Logarithmic spiral math: angle increases as radius increases
+                    const theta = percent * Math.PI * 2.8 + armOffset;
+                    const gx = Math.cos(theta) * r;
+                    const gy = Math.sin(theta) * r;
+                    
+                    const gasGrad = bgCtx.createRadialGradient(gx, gy, 0, gx, gy, 15 + percent * 50);
+                    const alphaValue = 0.07 * (1 - percent);
+                    gasGrad.addColorStop(0, arm % 2 === 0 ? `rgba(139, 92, 246, ${alphaValue * 1.5})` : `rgba(6, 182, 212, ${alphaValue * 1.5})`);
+                    gasGrad.addColorStop(1, 'rgba(0,0,0,0)');
+                    
+                    bgCtx.fillStyle = gasGrad;
+                    bgCtx.beginPath();
+                    bgCtx.arc(gx, gy, 15 + percent * 50, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+            
+            // Draw bright spiral galaxy core
+            let coreGlow = bgCtx.createRadialGradient(0, 0, 0, 0, 0, Math.min(w, h) * 0.14);
+            coreGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+            coreGlow.addColorStop(0.2, 'rgba(253, 186, 116, 0.45)'); // Peach
+            coreGlow.addColorStop(0.6, 'rgba(240, 159, 45, 0.15)'); // Gold
+            coreGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            bgCtx.fillStyle = coreGlow;
+            bgCtx.beginPath();
+            bgCtx.arc(0, 0, Math.min(w, h) * 0.14, 0, Math.PI * 2);
+            bgCtx.fill();
+            
+            bgCtx.restore();
+            
+            // 4. Draw Twinkling Stars
+            bgCtx.globalCompositeOperation = 'source-over';
+            for (let i = 0; i < bgStars.length; i++) {
+                const star = bgStars[i];
+                star.phase += star.twinkleSpeed;
+                
+                // Twinkle Math
+                const opacityMod = Math.abs(Math.sin(star.phase));
+                const currentOpacity = star.opacity * (0.3 + opacityMod * 0.7);
+                const currentSize = star.size * (0.8 + opacityMod * 0.2);
+                
+                bgCtx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+                
+                if (star.flare) {
+                    // Bright star with flare/glow
+                    bgCtx.save();
+                    bgCtx.globalCompositeOperation = 'screen';
+                    
+                    // Soft halo glow
+                    const starGlow = bgCtx.createRadialGradient(star.x, star.y, 0, star.x, star.y, currentSize * 4);
+                    starGlow.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity * 0.5})`);
+                    starGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    bgCtx.fillStyle = starGlow;
+                    bgCtx.beginPath();
+                    bgCtx.arc(star.x, star.y, currentSize * 4, 0, Math.PI * 2);
+                    bgCtx.fill();
+                    
+                    // Central bright core
+                    bgCtx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+                    bgCtx.beginPath();
+                    bgCtx.arc(star.x, star.y, currentSize, 0, Math.PI * 2);
+                    bgCtx.fill();
+                    
+                    // Simple cross-flare
+                    bgCtx.strokeStyle = `rgba(255, 255, 255, ${currentOpacity * 0.45})`;
+                    bgCtx.lineWidth = 0.55;
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(star.x - currentSize * 4, star.y);
+                    bgCtx.lineTo(star.x + currentSize * 4, star.y);
+                    bgCtx.moveTo(star.x, star.y - currentSize * 4);
+                    bgCtx.lineTo(star.x, star.y + currentSize * 4);
+                    bgCtx.stroke();
+                    
+                    bgCtx.restore();
+                } else {
+                    // Standard background star
+                    bgCtx.beginPath();
+                    bgCtx.arc(star.x, star.y, currentSize, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+            
+            requestAnimationFrame(animateGalaxy);
+        }
+
+        // Toggle mobile menu logic safely
+        const menuBtn = document.getElementById('menu-btn');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIcon = document.getElementById('menu-icon');
+                if (mobileMenu && menuIcon) {
+                    mobileMenu.classList.toggle('hidden');
+                    const isOpen = !mobileMenu.classList.contains('hidden');
+                    if (isOpen) {
+                        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                    } else {
+                        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                    }
+                }
+            });
+        }
+
+        // Tab routing logic based on Hash routing - FIXED ReferenceError by querying dynamically
+        function switchView() {
+            const currentHash = window.location.hash || '#about';
+            const targetId = currentHash.replace('#', '');
+            
+            // Hide all views first
+            const panels = document.querySelectorAll('.view-panel');
+            panels.forEach(panel => panel.classList.add('hidden'));
+
+            // Show current view
+            const activePanel = document.getElementById(`view-${targetId}`);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+                // Scroll interior panel back to top
+                activePanel.scrollTop = 0;
+            }
+
+            // Close mobile menu dynamically to prevent ReferenceErrors
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
+            if (menuIcon) {
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+
+            // Update top desktop navbar active highlight
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-target') === targetId) {
+                    link.classList.add('nav-link-active');
+                } else {
+                    link.classList.remove('nav-link-active');
+                }
+            });
+
+            // Update mobile navbar active highlight
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileLinks.forEach(link => {
+                if (link.getAttribute('data-target') === targetId) {
+                    link.classList.add('text-orbitGold');
+                } else {
+                    link.classList.remove('text-orbitGold');
+                }
+            });
+
+            // Game activation & pausing triggers
+            if (targetId === 'game') {
+                setTimeout(resizeGameCanvas, 50);
+            } else {
+                if (gameActive) {
+                    gameActive = false;
+                    if (gameLoopId) cancelAnimationFrame(gameLoopId);
+                    
+                    const overlay = document.getElementById('game-screen-overlay');
+                    const startState = document.getElementById('game-start-state');
+                    const scoreState = document.getElementById('game-score-state');
+                    
+                    if (overlay && startState && scoreState) {
+                        // Switch back to start interface with resume parameters
+                        startState.classList.remove('hidden');
+                        scoreState.classList.add('hidden');
+                        
+                        const title = document.getElementById('overlay-title');
+                        const desc = document.getElementById('overlay-desc');
+                        const btn = document.getElementById('start-game-btn');
+                        
+                        if (title && desc && btn) {
+                            title.textContent = "MISSION PAUSED";
+                            desc.innerHTML = "You stepped away from the bay.<br>Ready to resume zero-gravity piloting?";
+                            btn.textContent = "RESUME PROTOCOL";
+                        }
+                        overlay.classList.remove('hidden');
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', switchView);
+        window.addEventListener('DOMContentLoaded', () => {
+            switchView();
+            initGalaxyBg(); // Fire procedural background
+            initGame(); // Fire mini game
+            
+            // Lock feedback name input to ONLY accept alphabetical letters and spaces
+            const nameInput = document.getElementById('feedback-name-input');
+            if (nameInput) {
+                nameInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                });
+            }
+        });
+
+        // --- INTERACTIVE FEEDBACK RATING STATE CONTROLLERS ---
+        let currentFeedbackRating = 0;
+        const feedbackRatingLabels = {
+            0: "--",
+            1: "SYSTEM FLAGGED 🚨",
+            2: "STABLE PATH 🛰️",
+            3: "GOOD FLIGHT 🪐",
+            4: "PREMIUM ORBIT ⭐",
+            5: "EXCELLENT APOGEE 👑"
+        };
+        let feedbackActiveCategories = [];
+
+        function setFeedbackRating(val) {
+            currentFeedbackRating = val;
+            
+            // Loop through star buttons and toggle glowing active status
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`feedback-star-${i}`);
+                if (!star) continue;
+                if (i <= val) {
+                    star.style.color = '#f09f2d'; // Orbit Gold Glow
+                    star.style.filter = 'drop-shadow(0 0 8px rgba(240, 159, 45, 0.75))';
+                } else {
+                    star.style.color = '#4b5563'; // Dark Grey Off-state (stars 4 and 5 correctly stay dark!)
+                    star.style.filter = 'none';
+                }
+            }
+            
+            const label = document.getElementById('feedback-rating-label');
+            if (label) {
+                label.textContent = feedbackRatingLabels[val];
+                label.style.color = val > 0 ? '#f09f2d' : '#6b7280';
+            }
+        }
+
+        function toggleFeedbackCategory(cat) {
+            const btn = document.getElementById(`f-cat-${cat}`);
+            if (!btn) return;
+            
+            const index = feedbackActiveCategories.indexOf(cat);
+            if (index > -1) {
+                // Remove category
+                feedbackActiveCategories.splice(index, 1);
+                btn.className = "px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[10px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none";
+            } else {
+                // Add category
+                feedbackActiveCategories.push(cat);
+                btn.className = "px-3 py-1.5 rounded-lg border border-orbitGold/70 bg-orbitGold/20 text-orbitGold text-[10px] font-orbitron font-bold uppercase hover:bg-orbitGold/30 transition-all select-none holo-glow-gold";
+            }
+        }
+
+        // --- WEB APP TELEMETRY SUBMISSION (PASTE YOUR DEPLOYED URL HERE!) ---
+        function submitFeedbackForm() {https://script.google.com/macros/s/AKfycbzIpsuhK09w73c7Oa2XP-SYEJyV-7aPkynN2aq_BQyIY4_Pq5oe4Gu_sC5nWGoHfAhlxg/exec}
+            const textInput = document.getElementById('feedback-message-input');
+            const nameInput = document.getElementById('feedback-name-input');
+            const emailInput = document.getElementById('feedback-email-input');
+            const phoneInput = document.getElementById('feedback-phone-input');
+            const submitBtn = document.querySelector('button[onclick="submitFeedbackForm()"]');
+            const errorLog = document.getElementById('feedback-error-log');
+
+            // Help function to cleanly post error banners in cockpit hud instead of ugly window alerts
+            function showFeedbackError(msg) {
+                if (errorLog) {
+                    errorLog.textContent = msg;
+                    errorLog.classList.remove('hidden');
+                }
+            }
+
+            // Clear any old error state
+            if (errorLog) {
+                errorLog.classList.add('hidden');
+                errorLog.textContent = "";
+            }
+
+            // Validation 1: Star Rating Selected Check
+            if (currentFeedbackRating === 0) {
+                showFeedbackError("ALERT PROTOCOL: Please select a Cosmic Satisfaction Index rating (1-5 stars) before transmitting.");
+                return;
+            }
+
+            // Validation 2: Astro Name Only Words check
+            const nameVal = nameInput ? nameInput.value.trim() : "";
+            if (!nameVal) {
+                showFeedbackError("ALERT PROTOCOL: Astro Name field is empty. Please authenticate with letters only.");
+                return;
+            }
+            if (/[^a-zA-Z\s]/.test(nameVal)) {
+                showFeedbackError("ALERT PROTOCOL: Astro Name can only contain letters. Numeric values are unauthorized.");
+                return;
+            }
+
+            // Validation 3: Strict Domain Email Check (flags dummy extensions like ajbchjbhfj@dajfjsknj)
+            const emailVal = emailInput ? emailInput.value.trim() : "";
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            if (!emailVal || !emailRegex.test(emailVal)) {
+                showFeedbackError("ALERT PROTOCOL: Transmission failed. Please enter a valid Email with domain (e.g. pilot@orbit.com).");
+                return;
+            }
+
+            // Validation 4: Phone Country Code prefix check
+            const phoneVal = phoneInput ? phoneInput.value.trim() : "";
+            if (!phoneVal.startsWith('+60')) {
+                showFeedbackError("ALERT PROTOCOL: Phone Number must begin with country prefix code '+60' to sync satellite frequencies.");
+                return;
+            }
+            const phoneDigitsRegex = /^\+60\d{8,11}$/;
+            if (!phoneDigitsRegex.test(phoneVal)) {
+                showFeedbackError("ALERT PROTOCOL: Phone Number must contain country prefix '+60' followed by 8 to 11 standard numeric digits.");
+                return;
+            }
+
+            // Validation 5: Empty Remarks Check
+            if (!textInput || !textInput.value.trim()) {
+                showFeedbackError("ALERT PROTOCOL: Feedback Remarks field is empty. Tell us how to optimize the simulator.");
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+                submitBtn.textContent = "TRANSMITTING RATINGS...";
+            }
+
+            // ===============================================================
+            // ⚠️ SPACEBOYS DEVELOPERS: YOUR LIVE WEB APP ENDPOINT IS CONNECTED!
+            // ===============================================================
+            const webAppUrl = "https://script.google.com/macros/s/AKfycbwyykyJYUTnOrBePwyTpXRZnfzhSIaESMjSYolE2SipBzJiI1ON1BOV33SYCqIC9c4ZhA/exec"; 
+
+            const payload = {
+                rating: currentFeedbackRating,
+                categories: feedbackActiveCategories,
+                remarks: textInput.value.trim(),
+                name: nameVal,
+                email: emailVal,
+                phone: phoneVal
+            };
+
+            // Send feedback data directly to your deployed Google sheet
+            fetch(webAppUrl, {
+                method: 'POST',
+                mode: 'no-cors', // Bypasses browser CORS errors for static client fetches safely
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                // Clean up and reset form values after successful transmission
+                setFeedbackRating(0);
+                const label = document.getElementById('feedback-rating-label');
+                if (label) {
+                    label.textContent = "--";
+                    label.style.color = '#6b7280';
+                }
+
+                const categories = ['physics', 'stem', 'ui', 'bg'];
+                categories.forEach(cat => {
+                    const btn = document.getElementById(`f-cat-${cat}`);
+                    if (btn) btn.className = "px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[10px] font-orbitron font-bold uppercase hover:bg-white/10 hover:text-white transition-all select-none";
+                });
+                feedbackActiveCategories = [];
+
+                if (textInput) textInput.value = '';
+                if (nameInput) nameInput.value = '';
+                if (emailInput) emailInput.value = '';
+                if (phoneInput) phoneInput.value = '';
+
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.textContent = "SUBMIT SYSTEM FEEDBACK";
+                }
+
+                // Show successful transmission overlay
+                const modal = document.getElementById('success-modal');
+                if (modal) modal.classList.remove('hidden');
+            })
+            .catch((err) => {
+                console.error("Telemetry failed:", err);
+                showFeedbackError("TRANSMISSION ERROR: Telemetry timed out. Sub-space backup link triggered.");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.textContent = "SUBMIT SYSTEM FEEDBACK";
+                }
+            });
+        }
+
+        // Handle contact form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const formStatus = document.getElementById('form-status');
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+            }
+            if (formStatus) formStatus.classList.remove('hidden');
+
+            setTimeout(() => {
+                if (formStatus) formStatus.classList.add('hidden');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                }
+                event.target.reset();
+                const modal = document.getElementById('success-modal');
+                if (modal) modal.classList.remove('hidden');
+            }, 1200);
+        }
+
+        // Close success modal
+        function closeModal() {
+            const modal = document.getElementById('success-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        // --- MINI SPACE GAME ENGINE (30 DAYS IN ISS PROTO RUNNER) ---
+        const gameCanvas = document.getElementById('mini-game-canvas');
+        let gameCtx;
+        let player = { x: 0, y: 0, width: 22, height: 38, speed: 6.5 };
+        let obstacles = [];
+        let powerups = [];
+        let particleEmitter = [];
+        let score = 0;
+        let highHighScore = 0;
+        let lives = 3;
+        let gameActive = false;
+        let gameLoopId = null;
+        let keys = {};
+        let touchMoveLeft = false;
+        let touchMoveRight = false;
+        let spawnTimer = 0;
+        let starScrollY = 0;
+        
+        // Difficulty and Score Configuration
+        let currentDifficulty = 'medium';
+        const difficultyConfigs = {
+            easy: { startSpeed: 2.0, spawnRate: 45, playerSpeed: 8, maxLives: 4, label: 'EASY', labelColor: '#10b981' },
+            medium: { startSpeed: 3.2, spawnRate: 30, playerSpeed: 6.5, maxLives: 3, label: 'MEDIUM', labelColor: '#f09f2d' },
+            hard: { startSpeed: 4.8, spawnRate: 18, playerSpeed: 5.5, maxLives: 2, label: 'HARD', labelColor: '#ef4444' }
+        };
+
+        function setDifficulty(level) {
+            if (gameActive) return; // Disallow switching while in active flight
+            currentDifficulty = level;
+            
+            // Toggle highlight visual classes on the overlay difficulty buttons
+            const levels = ['easy', 'medium', 'hard'];
+            levels.forEach(lvl => {
+                const btn = document.getElementById(`diff-btn-${lvl}`);
+                if (!btn) return;
+                if (lvl === level) {
+                    btn.classList.remove('border-white/10', 'bg-white/5', 'opacity-60');
+                    if (lvl === 'easy') btn.classList.add('border-[#10b981]/80', 'bg-[#10b981]/20', 'text-[#10b981]');
+                    if (lvl === 'medium') btn.classList.add('border-[#f09f2d]/80', 'bg-[#f09f2d]/20', 'text-[#f09f2d]');
+                    if (lvl === 'hard') btn.classList.add('border-[#ef4444]/80', 'bg-[#ef4444]/20', 'text-[#ef4444]');
+                } else {
+                    btn.className = `py-2 rounded-lg font-orbitron font-extrabold text-[10px] tracking-wider border opacity-60 transition-all `;
+                    if (lvl === 'easy') btn.classList.add('border-[#10b981]/20', 'bg-[#10b981]/5', 'text-[#10b981]');
+                    if (lvl === 'medium') btn.classList.add('border-[#f09f2d]/20', 'bg-[#f09f2d]/5', 'text-[#f09f2d]');
+                    if (lvl === 'hard') btn.classList.add('border-[#ef4444]/20', 'bg-[#ef4444]/5', 'text-[#ef4444]');
+                }
+            });
+
+            // Update the HUD displays immediately
+            const hudDiff = document.getElementById('hud-difficulty-display');
+            if (hudDiff) {
+                hudDiff.textContent = difficultyConfigs[level].label;
+                hudDiff.style.color = difficultyConfigs[level].labelColor;
+            }
+        }
+
+        function initGame() {
+            if (!gameCanvas) return;
+            gameCtx = gameCanvas.getContext('2d');
+            resizeGameCanvas();
+            
+            // Set initial difficulty button state highlights on start
+            setDifficulty('medium');
+            
+            // Robust Dual Input listeners supporting Arrow keys, WASD, and numeric keypads (Left = 4, Right = 6)
+            window.addEventListener('keydown', (e) => {
+                const handledCodes = ['ArrowLeft', 'ArrowRight', 'KeyA', 'KeyD', 'Numpad4', 'Numpad6'];
+                const handledKeys = ['Left', 'Right', 'a', 'd', 'A', 'D', '4', '6'];
+                if (handledCodes.includes(e.code) || handledKeys.includes(e.key)) {
+                    if (gameActive) e.preventDefault();
+                }
+                keys[e.code] = true;
+                keys[e.key] = true;
+            });
+            window.addEventListener('keyup', (e) => {
+                keys[e.code] = false;
+                keys[e.key] = false;
+            });
+
+            // Touch support button mapping for mobile
+            const btnLeft = document.getElementById('touch-left');
+            const btnRight = document.getElementById('touch-right');
+            if (btnLeft && btnRight) {
+                btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); touchMoveLeft = true; }, { passive: false });
+                btnLeft.addEventListener('touchend', () => { touchMoveLeft = false; });
+                btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); touchMoveRight = true; }, { passive: false });
+                btnRight.addEventListener('touchend', () => { touchMoveRight = false; });
+            }
+
+            const startBtn = document.getElementById('start-game-btn');
+            if (startBtn) {
+                startBtn.addEventListener('click', startGame);
+            }
+        }
+
+        function resizeGameCanvas() {
+            if (!gameCanvas) return;
+            const parent = gameCanvas.parentNode;
+            if (parent) {
+                gameCanvas.width = parent.clientWidth;
+                gameCanvas.height = parent.clientHeight;
+                player.y = gameCanvas.height - 55;
+                player.x = gameCanvas.width / 2 - player.width / 2;
+            }
+        }
+
+        function startGame() {
+            const overlay = document.getElementById('game-screen-overlay');
+            if (overlay) overlay.classList.add('hidden');
+            
+            const config = difficultyConfigs[currentDifficulty];
+            score = 0;
+            lives = config.maxLives;
+            player.speed = config.playerSpeed;
+            obstacles = [];
+            powerups = [];
+            particleEmitter = [];
+            gameActive = true;
+            
+            updateScoreHUD();
+            updateLivesHUD();
+            
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            gameLoopId = requestAnimationFrame(gameLoop);
+        }
+
+        // Handles instant restart directly from score summary screen
+        function startGameDirect() {
+            startGame();
+        }
+
+        // Returns player back to difficulty selector screen
+        function returnToMenu() {
+            const startState = document.getElementById('game-start-state');
+            const scoreState = document.getElementById('game-score-state');
+            
+            if (startState && scoreState) {
+                startState.classList.remove('hidden');
+                scoreState.classList.add('hidden');
+            }
+            
+            // Restore default launch banner text
+            const title = document.getElementById('overlay-title');
+            const desc = document.getElementById('overlay-desc');
+            const btn = document.getElementById('start-game-btn');
+            
+            if (title && desc && btn) {
+                title.textContent = "READY FOR DEPLOYMENT?";
+                desc.innerHTML = "Use Left / Right arrows or A/D to float, dodge asteroids, and harvest glowing cyan cores!";
+                btn.textContent = "INITIATE LAUNCH";
+            }
+        }
+
+        function gameOver() {
+            gameActive = false;
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            
+            const overlay = document.getElementById('game-screen-overlay');
+            const startState = document.getElementById('game-start-state');
+            const scoreState = document.getElementById('game-score-state');
+            
+            if (score > highHighScore) {
+                highHighScore = score;
+                const highEl = document.getElementById('game-high-score');
+                if (highEl) highEl.textContent = highHighScore;
+            }
+
+            if (overlay && startState && scoreState) {
+                // Switch interface from start controls to score results card
+                startState.classList.add('hidden');
+                scoreState.classList.remove('hidden');
+                
+                // Populate score screen fields dynamically
+                const finalScoreEl = document.getElementById('score-report-final');
+                const diffEl = document.getElementById('score-report-difficulty');
+                const rankEl = document.getElementById('score-report-rank');
+                
+                if (finalScoreEl) finalScoreEl.textContent = score;
+                if (diffEl) {
+                    diffEl.textContent = difficultyConfigs[currentDifficulty].label;
+                    diffEl.style.color = difficultyConfigs[currentDifficulty].labelColor;
+                }
+                
+                // Compute custom aerospace ranking rank
+                if (rankEl) {
+                    if (score < 100) {
+                        rankEl.textContent = "SPACE CADET 🪐";
+                        rankEl.style.color = "#94a3b8"; // Slate Gray
+                    } else if (score >= 100 && score < 250) {
+                        rankEl.textContent = "ISS FLIGHT ENGINEER 🛠️";
+                        rankEl.style.color = "#06b6d4"; // Cyan
+                    } else {
+                        rankEl.textContent = "GALAXY COMMANDER 👑";
+                        rankEl.style.color = "#f09f2d"; // Gold
+                    }
+                }
+
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        function updateScoreHUD() {
+            const scoreEl = document.getElementById('game-score');
+            if (scoreEl) scoreEl.textContent = score;
+        }
+
+        function updateLivesHUD() {
+            const livesContainer = document.getElementById('game-lives');
+            if (!livesContainer) return;
+            livesContainer.innerHTML = '';
+            for (let i = 0; i < lives; i++) {
+                const lifeDot = document.createElement('span');
+                lifeDot.className = 'w-2.5 h-2.5 bg-neonCyan rounded-full animate-pulse';
+                livesContainer.appendChild(lifeDot);
+            }
+        }
+
+        function drawRoundRect(ctx, x, y, width, height, radius) {
+            if (ctx.roundRect) {
+                ctx.beginPath();
+                ctx.roundRect(x, y, width, height, radius);
+                ctx.fill();
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + width - radius, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+                ctx.lineTo(x + width, y + height - radius);
+                ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                ctx.lineTo(x + radius, y + height);
+                ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function gameLoop() {
+            if (!gameActive) return;
+            
+            updateGame();
+            drawGame();
+            
+            gameLoopId = requestAnimationFrame(gameLoop);
+        }
+
+        // --- GAME STATE HANDLERS ---
+        function updateGame() {
+            const config = difficultyConfigs[currentDifficulty];
+
+            // Apply velocities with multi-key binding mappings (Standard Left/Right Arrows, WASD, and Keypad 4 & 6)
+            const goLeft = keys['ArrowLeft'] || keys['KeyA'] || keys['a'] || keys['A'] || keys['Left'] || keys['Numpad4'] || keys['4'] || touchMoveLeft;
+            const goRight = keys['ArrowRight'] || keys['KeyD'] || keys['d'] || keys['D'] || keys['Right'] || keys['Numpad6'] || keys['6'] || touchMoveRight;
+
+            if (goLeft) {
+                player.x -= player.speed;
+            }
+            if (goRight) {
+                player.x += player.speed;
+            }
+
+            // Boundary checks
+            if (player.x < 10) player.x = 10;
+            if (player.x > gameCanvas.width - player.width - 10) {
+                player.x = gameCanvas.width - player.width - 10;
+            }
+
+            // Jetpack ignition dust
+            if (Math.random() < 0.55) {
+                particleEmitter.push({
+                    x: player.x + player.width / 2,
+                    y: player.y + player.height - 4,
+                    size: Math.random() * 2.8 + 1,
+                    vy: Math.random() * 2.5 + 1.2,
+                    vx: (Math.random() - 0.5) * 1.0,
+                    life: 1.0,
+                    decay: 0.06,
+                    color: `rgba(240, 159, 45, ${0.4 + Math.random() * 0.6})`
+                });
+            }
+
+            // Progressive Difficulty multiplier based on current score
+            const speedMultiplier = 1.0 + (score / 150) * 0.4;
+
+            // Spawn obstacles and fuel cores with rate adjusted by difficulty
+            spawnTimer++;
+            if (spawnTimer % config.spawnRate === 0) {
+                // Debris spawn
+                obstacles.push({
+                    x: Math.random() * (gameCanvas.width - 40) + 10,
+                    y: -35,
+                    width: Math.random() * 16 + 14,
+                    height: Math.random() * 16 + 14,
+                    speed: (Math.random() * 2.5 + config.startSpeed) * speedMultiplier,
+                    rotation: Math.random() * Math.PI,
+                    rotSpeed: (Math.random() - 0.5) * 0.06
+                });
+            }
+            if (spawnTimer % Math.floor(config.spawnRate * 1.6) === 0) {
+                // Energy Core spawn
+                powerups.push({
+                    x: Math.random() * (gameCanvas.width - 30) + 10,
+                    y: -30,
+                    radius: 7.5,
+                    speed: (Math.random() * 1.5 + config.startSpeed) * speedMultiplier
+                });
+            }
+
+            // Move particles
+            for (let i = particleEmitter.length - 1; i >= 0; i--) {
+                const p = particleEmitter[i];
+                p.y += p.vy;
+                p.x += p.vx;
+                p.life -= p.decay;
+                if (p.life <= 0) particleEmitter.splice(i, 1);
+            }
+
+            // Move obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const o = obstacles[i];
+                o.y += o.speed;
+                o.rotation += o.rotSpeed;
+
+                // Simple box collider bounds
+                if (
+                    player.x < o.x + o.width &&
+                    player.x + player.width > o.x &&
+                    player.y < o.y + o.height &&
+                    player.y + player.height > o.y
+                ) {
+                    lives--;
+                    updateLivesHUD();
+                    obstacles.splice(i, 1);
+                    
+                    // Create explosion fireworks
+                    for (let k = 0; k < 12; k++) {
+                        particleEmitter.push({
+                            x: o.x + o.width / 2,
+                            y: o.y + o.height / 2,
+                            size: Math.random() * 4 + 2.5,
+                            vy: (Math.random() - 0.5) * 5,
+                            vx: (Math.random() - 0.5) * 5,
+                            life: 1.0,
+                            decay: 0.035,
+                            color: '#ef4444'
+                        });
+                    }
+
+                    if (lives <= 0) {
+                        gameOver();
+                    }
+                    continue;
+                }
+
+                if (o.y > gameCanvas.height) {
+                    obstacles.splice(i, 1);
+                }
+            }
+
+            // Move energy core crystals
+            for (let i = powerups.length - 1; i >= 0; i--) {
+                const p = powerups[i];
+                p.y += p.speed;
+
+                // Radial circle intersection test
+                const distance = Math.hypot((player.x + player.width / 2) - p.x, (player.y + player.height / 2) - p.y);
+                if (distance < p.radius + player.height / 2.2) {
+                    // Collect energy core: +10 pts on Easy, +20 pts on Medium, +35 pts on Hard
+                    let pointsEarned = 10;
+                    if (currentDifficulty === 'medium') pointsEarned = 20;
+                    if (currentDifficulty === 'hard') pointsEarned = 35;
+                    
+                    score += pointsEarned;
+                    updateScoreHUD();
+                    powerups.splice(i, 1);
+                    
+                    // Collect particles burst
+                    for (let k = 0; k < 8; k++) {
+                        particleEmitter.push({
+                            x: p.x,
+                            y: p.y,
+                            size: Math.random() * 2.5 + 1,
+                            vy: (Math.random() - 0.5) * 3,
+                            vx: (Math.random() - 0.5) * 3,
+                            life: 1.0,
+                            decay: 0.045,
+                            color: '#06b6d4'
+                        });
+                    }
+                    continue;
+                }
+
+                if (p.y > gameCanvas.height) {
+                    powerups.splice(i, 1);
+                }
+            }
+
+            // Background drift loop
+            starScrollY += 0.8;
+            if (starScrollY > gameCanvas.height) starScrollY = 0;
+        }
+
+        function drawGame() {
+            if (!gameCtx) return;
+            
+            // Clean view window
+            gameCtx.fillStyle = '#020208';
+            gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+            // Draw micro stars drift
+            gameCtx.fillStyle = 'rgba(255, 255, 255, 0.16)';
+            for (let i = 0; i < 22; i++) {
+                const sx = (i * 109) % gameCanvas.width;
+                const sy = ((i * 113) + starScrollY) % gameCanvas.height;
+                gameCtx.fillRect(sx, sy, 1.5, 1.5);
+            }
+
+            // Render active flame/collect sparkles
+            for (let p of particleEmitter) {
+                gameCtx.fillStyle = p.color || `rgba(240, 159, 45, ${p.life})`;
+                gameCtx.beginPath();
+                gameCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                gameCtx.fill();
+            }
+
+            // Render spinning Golden Energy Cores
+            for (let p of powerups) {
+                gameCtx.save();
+                gameCtx.shadowBlur = 10;
+                gameCtx.shadowColor = '#06b6d4';
+                gameCtx.fillStyle = '#06b6d4';
+                gameCtx.beginPath();
+                gameCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                gameCtx.fill();
+                
+                gameCtx.fillStyle = '#ffffff';
+                gameCtx.beginPath();
+                gameCtx.arc(p.x, p.y, p.radius * 0.45, 0, Math.PI * 2);
+                gameCtx.fill();
+                gameCtx.restore();
+            }
+
+            // Render Debris obstacles
+            for (let o of obstacles) {
+                gameCtx.save();
+                gameCtx.translate(o.x + o.width / 2, o.y + o.height / 2);
+                gameCtx.rotate(o.rotation);
+                
+                // Poly rock coordinates
+                gameCtx.fillStyle = '#1e293b';
+                gameCtx.strokeStyle = '#ef4444';
+                gameCtx.lineWidth = 1.5;
+                gameCtx.beginPath();
+                gameCtx.moveTo(-o.width / 2, -o.height / 2);
+                gameCtx.lineTo(o.width / 2.2, -o.height / 2.5);
+                gameCtx.lineTo(o.width / 1.8, o.height / 2.2);
+                gameCtx.lineTo(-o.width / 2, o.height / 1.8);
+                gameCtx.closePath();
+                gameCtx.fill();
+                gameCtx.stroke();
+                
+                gameCtx.restore();
+            }
+
+            // Render Astronaut Character
+            gameCtx.save();
+            gameCtx.translate(player.x, player.y);
+            
+            // Jetpack back
+            gameCtx.fillStyle = '#475569';
+            gameCtx.fillRect(-3, 8, 6, 20);
+
+            // Suit body with safe roundRect drawing helper
+            gameCtx.fillStyle = '#f8fafc';
+            drawRoundRect(gameCtx, 0, 10, player.width, 22, 5);
+
+            // Collar ring
+            gameCtx.fillStyle = '#0f172a';
+            gameCtx.fillRect(3, 8, player.width - 6, 3);
+
+            // Helmet
+            gameCtx.fillStyle = '#ffffff';
+            gameCtx.beginPath();
+            gameCtx.arc(player.width / 2, 5, 8, 0, Math.PI * 2);
+            gameCtx.fill();
+
+            // Gold visor reflection with safe roundRect drawing helper
+            gameCtx.fillStyle = '#f09f2d';
+            drawRoundRect(gameCtx, 3.5, 1, player.width - 7, 6, 2);
+
+            // Reflection highlight
+            gameCtx.fillStyle = '#ffffff';
+            gameCtx.fillRect(5, 2, 4, 1.2);
+
+            // Boots
+            gameCtx.fillStyle = '#0f172a';
+            gameCtx.fillRect(2, 31, 6, 5);
+            gameCtx.fillRect(player.width - 8, 31, 6, 5);
+
+            // Chest control parameters
+            gameCtx.fillStyle = '#06b6d4';
+            gameCtx.fillRect(6, 15, 3, 3);
+            gameCtx.fillStyle = '#f09f2d';
+            gameCtx.fillRect(12, 15, 3, 3);
+
+            gameCtx.restore();
+        }
+    </script>
+</body>
+</html>

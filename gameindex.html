@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReflexLab - Reaction Speed & Performance Test</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        elite: '#06b6d4',
+                        good: '#10b981',
+                        average: '#f59e0b',
+                        slow: '#ef4444'
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'ping-once': 'ping 0.3s cubic-bezier(0, 0, 0.2, 1) 1',
+                        'bounce-short': 'bounce 0.5s ease 2'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .unselectable {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white custom-scrollbar">
+
+    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('test')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-[#ffffff] fa-bolt text-xl text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">ReflexLab</span>
+                    <span class="text-xs px-2 py-0.5 ml-2 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">PRO</span>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <nav class="hidden md:flex items-center space-x-1 bg-slate-800/60 p-1.5 rounded-xl border border-slate-700/50">
+                <button onclick="switchTab('test')" id="nav-test" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 bg-indigo-600 text-white shadow-md">
+                    <i class="fa-solid fa-stopwatch mr-2"></i>Speed Test
+                </button>
+                <button onclick="switchTab('analytics')" id="nav-analytics" class="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-chart-line mr-2"></i>Analytics
+                </button>
+                <button onclick="switchTab('benchmarks')" id="nav-benchmarks" class="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-ranking-star mr-2"></i>Benchmarks
+                </button>
+                <button onclick="switchTab('science')" id="nav-science" class="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-brain mr-2"></i>The Science
+                </button>
+            </nav>
+
+            <!-- Quick Controls -->
+            <div class="flex items-center space-x-3">
+                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/50 transition-colors" title="Toggle Sound SFX">
+                    <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+                </button>
+                <button onclick="switchTab('analytics')" class="md:hidden p-2.5 rounded-xl bg-slate-800/80 text-slate-300 border border-slate-700/50">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu Bar -->
+        <div class="md:hidden flex border-t border-slate-800 bg-slate-900/90 px-2 py-2 justify-around text-xs">
+            <button onclick="switchTab('test')" class="flex flex-col items-center py-1 px-3 text-indigo-400">
+                <i class="fa-solid fa-stopwatch text-base mb-1"></i>Test
+            </button>
+            <button onclick="switchTab('analytics')" class="flex flex-col items-center py-1 px-3 text-slate-400">
+                <i class="fa-solid fa-chart-line text-base mb-1"></i>Stats
+            </button>
+            <button onclick="switchTab('benchmarks')" class="flex flex-col items-center py-1 px-3 text-slate-400">
+                <i class="fa-solid fa-ranking-star text-base mb-1"></i>Ranks
+            </button>
+            <button onclick="switchTab('science')" class="flex flex-col items-center py-1 px-3 text-slate-400">
+                <i class="fa-solid fa-brain text-base mb-1"></i>Science
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+        
+        <!-- ================= TAB 1: SPEED TEST ================= -->
+        <div id="tab-test-content" class="tab-page space-y-6 flex-1 flex flex-col">
+            
+            <!-- Mode Selector Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900/80 p-3 rounded-2xl border border-slate-800">
+                <div class="text-sm font-semibold text-slate-400 uppercase tracking-wider px-2">
+                    <i class="fa-solid fa-sliders text-indigo-400 mr-2"></i>Test Mode:
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="selectMode('visual')" id="mode-btn-visual" class="mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-indigo-600 text-white shadow-md">
+                        <i class="fa-solid fa-eye mr-1.5"></i>Visual Click
+                    </button>
+                    <button onclick="selectMode('audio')" id="mode-btn-audio" class="mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <i class="fa-solid fa-headphones mr-1.5"></i>Audio Beep
+                    </button>
+                    <button onclick="selectMode('choice')" id="mode-btn-choice" class="mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <i class="fa-solid fa-hand-pointer mr-1.5"></i>Choice Key (A/S/D/F)
+                    </button>
+                    <button onclick="selectMode('aim')" id="mode-btn-aim" class="mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <i class="fa-solid fa-crosshair mr-1.5"></i>Precision Target
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAIN INTERACTIVE ARENA -->
+            <div id="arena" class="relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group">
+                
+                <!-- Dynamic Background Pulse Grid -->
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+                <!-- TEST ARENA STATE CONTENT CONTAINER -->
+                <div id="arenaContent" class="relative z-10 max-w-lg mx-auto flex flex-col items-center pointer-events-none">
+                    
+                    <!-- Icon Placeholder -->
+                    <div id="arenaIcon" class="w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                    </div>
+
+                    <!-- Title Header -->
+                    <h2 id="arenaTitle" class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 text-white">
+                        Click Anywhere to Start
+                    </h2>
+
+                    <!-- Subtitle / Instruction -->
+                    <p id="arenaDesc" class="text-slate-400 text-base sm:text-lg font-medium leading-relaxed max-w-md">
+                        When the screen changes color to green, click or tap as quickly as you can.
+                    </p>
+
+                    <!-- Choice Test Container (Hidden by default) -->
+                    <div id="choicePrompt" class="hidden mt-6 flex gap-4 pointer-events-auto">
+                        <!-- Key cards will be generated dynamically -->
+                    </div>
+
+                    <!-- Aim Canvas Overlay Container (Hidden by default) -->
+                    <div id="aimTarget" class="hidden absolute w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-rose-400 border-4 border-white shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-transform active:scale-95 animate-ping-once"></div>
+
+                    <!-- Prompt Key Helper -->
+                    <div id="arenaHint" class="mt-8 text-xs font-mono text-slate-500 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800">
+                        Spacebar or Mouse Click supported
+                    </div>
+                </div>
+
+                <!-- Overlay feedback badge when click finishes -->
+                <div id="resultBadge" class="hidden absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg"></div>
+            </div>
+
+            <!-- LIVE SESSION SUMMARY CARDS -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-stopwatch text-indigo-400 mr-1.5"></i>Last Attempt</span>
+                    <div class="mt-2 flex items-baseline">
+                        <span id="statLast" class="text-2xl sm:text-3xl font-extrabold font-mono text-white">--</span>
+                        <span class="text-xs font-medium text-slate-400 ml-1">ms</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Best Time</span>
+                    <div class="mt-2 flex items-baseline">
+                        <span id="statBest" class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400">--</span>
+                        <span class="text-xs font-medium text-slate-400 ml-1">ms</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-calculator text-cyan-400 mr-1.5"></i>5-Avg Time</span>
+                    <div class="mt-2 flex items-baseline">
+                        <span id="statAvg" class="text-2xl sm:text-3xl font-extrabold font-mono text-cyan-300">--</span>
+                        <span class="text-xs font-medium text-slate-400 ml-1">ms</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-layer-group text-purple-400 mr-1.5"></i>Completed</span>
+                    <div class="mt-2 flex items-baseline">
+                        <span id="statCount" class="text-2xl sm:text-3xl font-extrabold font-mono text-purple-300">0</span>
+                        <span class="text-xs font-medium text-slate-400 ml-1">trials</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUICK TIER REFERENCE PANEL BELOW TEST AREA -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-800">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-gauge-high text-indigo-400 mr-2"></i>Reaction Speed Classification Tiers
+                    </h3>
+                    <button onclick="switchTab('benchmarks')" class="text-xs text-indigo-400 hover:text-indigo-300 underline font-medium">View Detailed Metrics &rarr;</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                    <div id="tierCardElite" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 transition-all">
+                        <div class="flex items-center justify-between font-bold text-cyan-400 mb-1">
+                            <span>&lt; 200 ms</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-800 text-[10px]">ELITE</span>
+                        </div>
+                        <p class="text-slate-400">Pro racers, fighter pilots & fast gamers.</p>
+                    </div>
+
+                    <div id="tierCardGood" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 transition-all">
+                        <div class="flex items-center justify-between font-bold text-emerald-400 mb-1">
+                            <span>200 – 250 ms</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-[10px]">GOOD</span>
+                        </div>
+                        <p class="text-slate-400">Good to average for healthy adults.</p>
+                    </div>
+
+                    <div id="tierCardAvg" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 transition-all">
+                        <div class="flex items-center justify-between font-bold text-amber-400 mb-1">
+                            <span>250 – 300 ms</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-950 border border-amber-800 text-[10px]">TYPICAL</span>
+                        </div>
+                        <p class="text-slate-400">Typical average including hardware lag.</p>
+                    </div>
+
+                    <div id="tierCardSlow" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 transition-all">
+                        <div class="flex items-center justify-between font-bold text-rose-400 mb-1">
+                            <span>&gt; 300 ms</span>
+                            <span class="px-2 py-0.5 rounded bg-rose-950 border border-rose-800 text-[10px]">SLOWER</span>
+                        </div>
+                        <p class="text-slate-400">Affected by fatigue or distraction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: ANALYTICS ================= -->
+        <div id="tab-analytics-content" class="tab-page hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-white">Performance Analytics</h1>
+                    <p class="text-slate-400 text-sm">Detailed logs and distribution graph of your test attempts.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="clearHistory()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-colors">
+                        <i class="fa-solid fa-trash-can mr-2"></i>Reset Session Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Line Chart (History over time) -->
+                <div class="glass-card p-5 rounded-2xl lg:col-span-2 border border-slate-800 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-chart-line text-indigo-400 mr-2"></i>Reaction Time Progression (ms)
+                        </h3>
+                        <span class="text-xs font-mono text-slate-400" id="chartTotalLabel">0 Sessions</span>
+                    </div>
+                    <div class="relative h-64 sm:h-72 w-full">
+                        <canvas id="reactionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance Breakdown Card -->
+                <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                    <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-bullseye text-cyan-400 mr-2"></i>Tier Distribution
+                    </h3>
+                    
+                    <div class="space-y-3 flex-1 flex flex-col justify-center">
+                        <!-- Elite Bar -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-cyan-400"><i class="fa-solid fa-crown mr-1"></i>Elite (&lt;200ms)</span>
+                                <span id="distEliteCount" class="text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="distEliteBar" class="bg-cyan-400 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- Good Bar -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Good (200-250ms)</span>
+                                <span id="distGoodCount" class="text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="distGoodBar" class="bg-emerald-400 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- Average Bar -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-amber-400"><i class="fa-solid fa-user text-xs mr-1"></i>Typical (250-300ms)</span>
+                                <span id="distAvgCount" class="text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="distAvgBar" class="bg-amber-400 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- Slower Bar -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-rose-400"><i class="fa-solid fa-bed mr-1"></i>Slower (&gt;300ms)</span>
+                                <span id="distSlowCount" class="text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="distSlowBar" class="bg-rose-400 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-800 text-xs text-slate-400 flex justify-between items-center">
+                        <span>Consistency Score:</span>
+                        <span id="consistencyScore" class="font-bold text-slate-200">N/A</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Logs Table -->
+            <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+                <div class="p-4 border-b border-slate-800 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-2"></i>Recent Test Attempts
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-900/80 text-xs text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="py-3 px-4">#</th>
+                                <th class="py-3 px-4">Mode</th>
+                                <th class="py-3 px-4">Reaction Time</th>
+                                <th class="py-3 px-4">Classification Rank</th>
+                                <th class="py-3 px-4">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" class="divide-y divide-slate-800/60 font-mono text-xs">
+                            <tr>
+                                <td colspan="5" class="py-8 text-center text-slate-500 font-sans">
+                                    No attempt history logged yet. Complete a speed test to view results!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: BENCHMARKS ================= -->
+        <div id="tab-benchmarks-content" class="tab-page hidden space-y-6">
+            <div class="text-center max-w-2xl mx-auto space-y-2 mb-8">
+                <h1 class="text-3xl font-extrabold text-white">Reaction Time Benchmarks</h1>
+                <p class="text-slate-400 text-sm">
+                    How do your reflex speeds compare against human standards, esports athletes, fighter pilots, and general hardware overheads?
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tier 1: Elite -->
+                <div class="glass-card rounded-3xl p-6 border border-cyan-500/30 bg-gradient-to-b from-cyan-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-xl mb-4 font-bold">
+                            &lt; 200
+                        </div>
+                        <span class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-wider">
+                            Elite Tier
+                        </span>
+                        <h3 class="text-xl font-bold text-white mt-3 mb-2">Under 200 ms</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Professional Formula 1 racers, fighter jet pilots, or top-tier competitive esports gamers (CS2, Valorant, League of Legends).
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-lightbulb text-cyan-400 mr-1"></i> Near the physiological human neural processing limit.
+                    </div>
+                </div>
+
+                <!-- Tier 2: Good -->
+                <div class="glass-card rounded-3xl p-6 border border-emerald-500/30 bg-gradient-to-b from-emerald-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-emerald-500/20 transition-all"></div>
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xl mb-4 font-bold">
+                            200-250
+                        </div>
+                        <span class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
+                            Good / Healthy
+                        </span>
+                        <h3 class="text-xl font-bold text-white mt-3 mb-2">200 – 250 ms</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Good to average response speed for well-rested, healthy young adults with decent motor control and low-latency displays.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-check text-emerald-400 mr-1"></i> Represents solid cognitive-motor integration.
+                    </div>
+                </div>
+
+                <!-- Tier 3: Typical -->
+                <div class="glass-card rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-b from-amber-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-amber-500/20 transition-all"></div>
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-xl mb-4 font-bold">
+                            250-300
+                        </div>
+                        <span class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+                            Typical / Standard
+                        </span>
+                        <h3 class="text-xl font-bold text-white mt-3 mb-2">250 – 300 ms</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Typical population average once standard online browser delays, Bluetooth mouse latency, and 60Hz display lag are included.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-desktop text-amber-400 mr-1"></i> Hardware input lag adds 20-50ms here.
+                    </div>
+                </div>
+
+                <!-- Tier 4: Slower -->
+                <div class="glass-card rounded-3xl p-6 border border-rose-500/30 bg-gradient-to-b from-rose-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-rose-500/20 transition-all"></div>
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xl mb-4 font-bold">
+                            &gt; 300
+                        </div>
+                        <span class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30 uppercase tracking-wider">
+                            Slower Response
+                        </span>
+                        <h3 class="text-xl font-bold text-white mt-3 mb-2">Over 300 ms</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Slower visual response time, often significantly influenced by fatigue, lack of sleep, multitasking distraction, or age.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-mug-hot text-rose-400 mr-1"></i> Rest, hydration, or focus exercises recommended.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hardware Lag Factor Explanation Box -->
+            <div class="glass-card p-6 rounded-3xl border border-slate-800 bg-slate-900/60">
+                <h3 class="text-base font-bold text-white mb-3 flex items-center">
+                    <i class="fa-solid fa-microchip text-indigo-400 mr-2"></i>Understanding The Hardware Latency Penalty
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-tv mr-1"></i> Monitor Refresh Rate</span>
+                        A 60Hz display updates every 16.6ms, while a 240Hz monitor updates every 4.1ms. High refresh rates reduce visual delay dramatically.
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-mouse mr-1"></i> Peripheral Input Lag</span>
+                        Wireless Bluetooth mice can add 10ms to 30ms of latency compared to high-polling wired gaming mice (1000Hz+).
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-globe mr-1"></i> Browser Frame Processing</span>
+                        Web browsers process DOM updates in event loops, which can introduce an inherent 10–20ms measurement overhead.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: SCIENCE ================= -->
+        <div id="tab-science-content" class="tab-page hidden space-y-6">
+            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 max-w-4xl mx-auto space-y-6">
+                <div class="border-b border-slate-800 pb-5">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center">
+                        <i class="fa-solid fa-brain text-indigo-400 mr-3"></i>The Neuroscience of Human Reflexes
+                    </h1>
+                    <p class="text-slate-400 text-sm mt-1">
+                        How your brain pathways process sensory cues and convert them into muscular action.
+                    </p>
+                </div>
+
+                <div class="space-y-6 text-sm text-slate-300 leading-relaxed">
+                    <!-- Section 1 -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
+                        <h3 class="text-base font-bold text-white mb-2 flex items-center">
+                            <i class="fa-solid fa-route text-cyan-400 mr-2"></i>1. The Neural Pathway (What happens in ~200 milliseconds)
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-xs sm:text-sm text-slate-400">
+                            <li><strong class="text-slate-200">Sensory Perception (~20-40ms):</strong> Light photons strike the retina, activating photoreceptors that trigger electrical impulses down the optic nerve.</li>
+                            <li><strong class="text-slate-200">Brain Processing (~60-100ms):</strong> Signal reaches the primary visual cortex, moves to the motor cortex to decide the response.</li>
+                            <li><strong class="text-slate-200">Motor Signal Transmission (~30-50ms):</strong> Signal travels down the spinal cord and peripheral nerves to finger flexor muscles.</li>
+                            <li><strong class="text-slate-200">Muscle Activation (~20-30ms):</strong> Muscle fibers contract and actuate the mechanical mouse switch.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
+                            <h4 class="font-bold text-emerald-400 mb-2 flex items-center">
+                                <i class="fa-solid fa-bolt mr-2"></i>Simple Reaction Time
+                            </h4>
+                            <p class="text-xs text-slate-400">
+                                Occurs when there is only one stimulus and one response (e.g., clicking as soon as red turns green). Simple reaction times are the fastest, averaging around 190–240ms in optimal conditions.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
+                            <h4 class="font-bold text-amber-400 mb-2 flex items-center">
+                                <i class="fa-solid fa-code-branch mr-2"></i>Choice Reaction Time
+                            </h4>
+                            <p class="text-xs text-slate-400">
+                                Requires processing multiple stimuli and making a decision (e.g., matching key 'A' or 'S' based on prompt). Choice reaction time takes longer (typically +100ms to 200ms additional cognitive delay).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-base font-bold text-white flex items-center">
+                            <i class="fa-solid fa-arrow-trend-up text-indigo-400 mr-2"></i>Key Factors Influencing Your Reaction Times
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-bed text-purple-400 mr-1"></i> Sleep & Fatigue</span>
+                                Sleep deprivation slows neural transmission rates similarly to mild alcohol consumption.
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-coffee text-amber-400 mr-1"></i> Caffeine & Hydration</span>
+                                Mild caffeine intake boosts alertness and can shave 10-20ms off response times.
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-person-cane text-rose-400 mr-1"></i> Age Peak</span>
+                                Biological reaction speeds generally peak between ages 18 and 24, declining gradually thereafter.
+                            </div>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-bullseye text-emerald-400 mr-1"></i> Focus & Anticipation</span>
+                                High mental strain or multitasking reduces available cognitive bandwidth, slowing reactions above 300ms.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <span>&copy; ReflexLab Speed Metrics. Designed for precision testing.</span>
+            <div class="flex space-x-4">
+                <span class="hover:text-slate-300 transition-colors">Visual</span> &bull; 
+                <span class="hover:text-slate-300 transition-colors">Audio</span> &bull; 
+                <span class="hover:text-slate-300 transition-colors">Choice</span> &bull; 
+                <span class="hover:text-slate-300 transition-colors">Precision Aim</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // State Variables
+        let currentMode = 'visual'; // visual, audio, choice, aim
+        let gameState = 'idle'; // idle, waiting, ready, finished
+        let startTime = 0;
+        let timerTimeout = null;
+        let soundEnabled = true;
+        let sessionHistory = [];
+        let reactionChart = null;
+
+        // Choice Mode Setup
+        const choiceKeys = ['A', 'S', 'D', 'F'];
+        let activeChoiceKey = '';
+
+        // Web Audio Synthesizer for latency-free sound effects
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playTone(freq, type = 'sine', duration = 0.1, volume = 0.15) {
+            if (!soundEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {
+                console.error("Audio error:", e);
+            }
+        }
+
+        function playSuccessSound(ms) {
+            if (ms < 200) {
+                // Elite chime
+                playTone(587.33, 'triangle', 0.1, 0.2); // D5
+                setTimeout(() => playTone(880, 'triangle', 0.2, 0.25), 80); // A5
+            } else if (ms < 250) {
+                playTone(523.25, 'sine', 0.15, 0.2); // C5
+            } else {
+                playTone(349.23, 'sine', 0.15, 0.2); // F4
+            }
+        }
+
+        function playErrorSound() {
+            playTone(180, 'sawtooth', 0.25, 0.25);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-rose-400';
+            }
+        }
+
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-page').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}-content`).classList.remove('hidden');
+
+            // Reset tab button states
+            const navButtons = ['test', 'analytics', 'benchmarks', 'science'];
+            navButtons.forEach(btn => {
+                const el = document.getElementById(`nav-${btn}`);
+                if (el) {
+                    if (btn === tabId) {
+                        el.className = 'px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 bg-indigo-600 text-white shadow-md';
+                    } else {
+                        el.className = 'px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all duration-200';
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                renderChart();
+                updateAnalyticsView();
+            }
+        }
+
+        function selectMode(mode) {
+            if (gameState === 'waiting') {
+                cancelWait();
+            }
+            currentMode = mode;
+            gameState = 'idle';
+
+            // Reset mode buttons styling
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.className = 'mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700';
+            });
+            const activeBtn = document.getElementById(`mode-btn-${mode}`);
+            if (activeBtn) {
+                activeBtn.className = 'mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-indigo-600 text-white shadow-md';
+            }
+
+            resetArenaUI();
+        }
+
+        function resetArenaUI() {
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+            const hint = document.getElementById('arenaHint');
+            const choicePrompt = document.getElementById('choicePrompt');
+            const aimTarget = document.getElementById('aimTarget');
+            const resultBadge = document.getElementById('resultBadge');
+
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group";
+            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
+            choicePrompt.classList.add('hidden');
+            aimTarget.classList.add('hidden');
+            resultBadge.classList.add('hidden');
+
+            if (currentMode === 'visual') {
+                icon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                title.innerText = 'Visual Click Test';
+                desc.innerText = 'Click anywhere when the box turns bright GREEN.';
+                hint.innerText = 'Click or Press Spacebar';
+            } else if (currentMode === 'audio') {
+                icon.innerHTML = '<i class="fa-solid fa-headphones"></i>';
+                title.innerText = 'Audio Beep Test';
+                desc.innerText = 'Click immediately when you hear the high-pitched beep tone.';
+                hint.innerText = 'Click or Press Spacebar';
+            } else if (currentMode === 'choice') {
+                icon.innerHTML = '<i class="fa-solid fa-hand-pointer"></i>';
+                title.innerText = '4-Choice Key Reaction';
+                desc.innerText = 'Press the matching key (A, S, D, F) as soon as it lights up.';
+                hint.innerText = 'Use Keyboard Keys: A, S, D, F';
+            } else if (currentMode === 'aim') {
+                icon.innerHTML = '<i class="fa-solid fa-crosshair"></i>';
+                title.innerText = 'Precision Aim Reaction';
+                desc.innerText = 'Click the red target sphere as fast as you can when it spawns.';
+                hint.innerText = 'Click Target Directly';
+            }
+        }
+
+        // Arena Click / Interaction Handler
+        const arenaEl = document.getElementById('arena');
+
+        arenaEl.addEventListener('mousedown', (e) => {
+            // Ignore if aim target was clicked directly (handled separately)
+            if (currentMode === 'aim' && e.target.id === 'aimTarget') return;
+            handleUserTrigger();
+        });
+
+        // Keyboard triggers
+        window.addEventListener('keydown', (e) => {
+            // Check if space bar pressed during test tab
+            if (e.code === 'Space' && !document.getElementById('tab-test-content').classList.contains('hidden')) {
+                e.preventDefault();
+                handleUserTrigger();
+            }
+
+            // Choice mode keyboard matching
+            if (currentMode === 'choice' && gameState === 'ready') {
+                const keyUpper = e.key.toUpperCase();
+                if (choiceKeys.includes(keyUpper)) {
+                    if (keyUpper === activeChoiceKey) {
+                        finishTest();
+                    } else {
+                        triggerFalseStart("Wrong key pressed!");
+                    }
+                }
+            }
+        });
+
+        function handleUserTrigger() {
+            if (gameState === 'idle' || gameState === 'finished') {
+                startTestSequence();
+            } else if (gameState === 'waiting') {
+                triggerFalseStart("Too early! Wait for the signal.");
+            } else if (gameState === 'ready') {
+                if (currentMode === 'choice') {
+                    // Requires specific key press, ignore general clicks
+                    return;
+                }
+                finishTest();
+            }
+        }
+
+        function startTestSequence() {
+            gameState = 'waiting';
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+            const resultBadge = document.getElementById('resultBadge');
+
+            resultBadge.classList.add('hidden');
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-rose-950/40 border-2 border-rose-500/50 shadow-2xl overflow-hidden";
+            
+            icon.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-rose-400"></i>';
+            title.innerText = "Wait for Green...";
+            desc.innerText = "Prepare your finger...";
+
+            if (currentMode === 'choice') {
+                document.getElementById('choicePrompt').classList.add('hidden');
+            }
+
+            // Random delay between 1.5 seconds and 4.5 seconds
+            const delay = Math.floor(Math.random() * 3000) + 1500;
+
+            timerTimeout = setTimeout(() => {
+                triggerReadyState();
+            }, delay);
+        }
+
+        function cancelWait() {
+            if (timerTimeout) {
+                clearTimeout(timerTimeout);
+                timerTimeout = null;
+            }
+            gameState = 'idle';
+        }
+
+        function triggerFalseStart(msg) {
+            cancelWait();
+            playErrorSound();
+            
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-amber-950/40 border-2 border-amber-500/60 shadow-2xl overflow-hidden";
+            icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>';
+            title.innerText = "False Start!";
+            desc.innerText = msg + " Click to try again.";
+            
+            gameState = 'idle';
+        }
+
+        function triggerReadyState() {
+            gameState = 'ready';
+            startTime = performance.now();
+
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+
+            if (currentMode === 'visual') {
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-emerald-600 border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.5)] overflow-hidden";
+                icon.innerHTML = '<i class="fa-solid fa-bolt text-white text-4xl animate-bounce-short"></i>';
+                title.innerText = "CLICK NOW!";
+                desc.innerText = "";
+            } else if (currentMode === 'audio') {
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-indigo-600 border-2 border-indigo-400 shadow-[0_0_50px_rgba(99,102,241,0.5)] overflow-hidden";
+                icon.innerHTML = '<i class="fa-solid fa-volume-high text-white text-4xl"></i>';
+                title.innerText = "CLICK NOW!";
+                desc.innerText = "Audio cue emitted!";
+                playTone(880, 'sine', 0.3, 0.4); // Trigger crisp 880Hz beep
+            } else if (currentMode === 'choice') {
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-slate-700 shadow-2xl overflow-hidden";
+                
+                // Pick random key from choiceKeys
+                activeChoiceKey = choiceKeys[Math.floor(Math.random() * choiceKeys.length)];
+                
+                title.innerText = `PRESS KEY: [ ${activeChoiceKey} ]`;
+                desc.innerText = "Hit the correct key on your keyboard!";
+                
+                renderChoiceKeys();
+                playTone(600, 'sine', 0.1, 0.2);
+            } else if (currentMode === 'aim') {
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-slate-700 shadow-2xl overflow-hidden";
+                title.innerText = "HIT THE TARGET!";
+                desc.innerText = "";
+                spawnAimTarget();
+            }
+        }
+
+        function renderChoiceKeys() {
+            const container = document.getElementById('choicePrompt');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+
+            choiceKeys.forEach(k => {
+                const btn = document.createElement('div');
+                const isActive = (k === activeChoiceKey);
+                btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center font-mono text-xl font-bold border-2 transition-all shadow-lg ${
+                    isActive 
+                        ? 'bg-indigo-600 border-white text-white scale-110 shadow-indigo-500/50 animate-pulse' 
+                        : 'bg-slate-800 border-slate-700 text-slate-400'
+                }`;
+                btn.innerText = k;
+                container.appendChild(btn);
+            });
+        }
+
+        function spawnAimTarget() {
+            const arena = document.getElementById('arena');
+            const target = document.getElementById('aimTarget');
+            
+            // Random position within 20% to 80% bounds
+            const rect = arena.getBoundingClientRect();
+            const posX = Math.floor(Math.random() * (rect.width * 0.6)) + (rect.width * 0.2);
+            const posY = Math.floor(Math.random() * (rect.height * 0.5)) + (rect.height * 0.25);
+
+            target.style.left = `${posX}px`;
+            target.style.top = `${posY}px`;
+            target.classList.remove('hidden');
+
+            target.onclick = (e) => {
+                e.stopPropagation();
+                if (gameState === 'ready') {
+                    finishTest();
+                }
+            };
+        }
+
+        function finishTest() {
+            const endTime = performance.now();
+            const reactionMs = Math.round(endTime - startTime);
+            gameState = 'finished';
+
+            document.getElementById('aimTarget').classList.add('hidden');
+            playSuccessSound(reactionMs);
+
+            // Determine Tier Rank based on prompt specs:
+            // <200ms: Elite
+            // 200-250ms: Good
+            // 250-300ms: Typical
+            // >300ms: Slower
+            let tierInfo = getTierClassification(reactionMs);
+
+            // Record Log
+            const attempt = {
+                id: Date.now(),
+                mode: currentMode,
+                time: reactionMs,
+                tier: tierInfo.name,
+                color: tierInfo.colorClass,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+            };
+            sessionHistory.unshift(attempt);
+
+            // Update Arena View with Result
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+            const resultBadge = document.getElementById('resultBadge');
+
+            arena.className = `relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 ${tierInfo.borderClass} shadow-2xl overflow-hidden`;
+            
+            // Check if user hit "Typical Average" score (250 - 300 ms) or "Good" score (200 - 250 ms)
+            if (tierInfo.key === 'typical') {
+                icon.className = "mb-4 flex flex-col items-center justify-center";
+                icon.innerHTML = `
+                    <div class="flex flex-col items-center my-2 animate-bounce-short">
+                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/abunene.png" 
+                             alt="Typical Average Face" 
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-rose-600 shadow-2xl" 
+                             onerror="this.src='https://placehold.co/160x160/ef4444/ffffff?text=NOOB'">
+                        <span class="text-rose-500 font-black text-4xl sm:text-6xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">NOOB!</span>
+                    </div>
+                `;
+            } else if (tierInfo.key === 'good') {
+                icon.className = "mb-4 flex flex-col items-center justify-center";
+                icon.innerHTML = `
+                    <div class="flex flex-col items-center my-2 animate-bounce-short">
+                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/kelun.jpg" 
+                             alt="Good Score Face" 
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-emerald-500 shadow-2xl" 
+                             onerror="this.src='https://placehold.co/160x160/10b981/ffffff?text=STRONG'">
+                        <span class="text-rose-500 font-black text-2xl sm:text-4xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">WOOR SO STRONG BRO!</span>
+                    </div>
+                `;
+            } else {
+                icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
+                icon.innerHTML = `<i class="fa-solid ${tierInfo.icon} ${tierInfo.textClass}"></i>`;
+            }
+
+            title.innerHTML = `<span class="font-mono text-4xl sm:text-6xl font-extrabold ${tierInfo.textClass}">${reactionMs} <span class="text-2xl">ms</span></span>`;
+            desc.innerHTML = `<span class="text-white font-bold">${tierInfo.name} Rank</span> &bull; ${tierInfo.desc}<br><span class="text-xs text-slate-500 mt-2 block">Click anywhere to try again</span>`;
+
+            resultBadge.innerText = tierInfo.name;
+            resultBadge.className = `absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg ${tierInfo.badgeClass}`;
+            resultBadge.classList.remove('hidden');
+
+            highlightTierCard(tierInfo.key);
+            updateSummaryCards();
+        }
+
+        function getTierClassification(ms) {
+            if (ms < 200) {
+                return {
+                    key: 'elite',
+                    name: 'Elite',
+                    desc: 'Professional racers, fighter pilots, or fast gamers.',
+                    textClass: 'text-cyan-400',
+                    borderClass: 'border-cyan-500/80',
+                    badgeClass: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40',
+                    icon: 'fa-crown',
+                    colorClass: '#06b6d4'
+                };
+            } else if (ms <= 250) {
+                return {
+                    key: 'good',
+                    name: 'Good / Average',
+                    desc: 'Good to average for healthy adults.',
+                    textClass: 'text-emerald-400',
+                    borderClass: 'border-emerald-500/80',
+                    badgeClass: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40',
+                    icon: 'fa-circle-check',
+                    colorClass: '#10b981'
+                };
+            } else if (ms <= 300) {
+                return {
+                    key: 'typical',
+                    name: 'Typical Average',
+                    desc: 'Typical average including online hardware lag.',
+                    textClass: 'text-amber-400',
+                    borderClass: 'border-amber-500/80',
+                    badgeClass: 'bg-amber-500/20 text-amber-300 border border-amber-500/40',
+                    icon: 'fa-user',
+                    colorClass: '#f59e0b'
+                };
+            } else {
+                return {
+                    key: 'slower',
+                    name: 'Slower Response',
+                    desc: 'Often affected by fatigue, distraction, or lag.',
+                    textClass: 'text-rose-400',
+                    borderClass: 'border-rose-500/80',
+                    badgeClass: 'bg-rose-500/20 text-rose-300 border border-rose-500/40',
+                    icon: 'fa-bed',
+                    colorClass: '#ef4444'
+                };
+            }
+        }
+
+        function highlightTierCard(key) {
+            ['Elite', 'Good', 'Avg', 'Slow'].forEach(t => {
+                const card = document.getElementById(`tierCard${t}`);
+                if (card) card.classList.remove('ring-2', 'ring-indigo-500', 'bg-slate-800');
+            });
+
+            const cardMap = { 'elite': 'Elite', 'good': 'Good', 'typical': 'Avg', 'slower': 'Slow' };
+            const activeCard = document.getElementById(`tierCard${cardMap[key]}`);
+            if (activeCard) {
+                activeCard.classList.add('ring-2', 'ring-indigo-500', 'bg-slate-800');
+            }
+        }
+
+        function updateSummaryCards() {
+            if (sessionHistory.length === 0) return;
+
+            const times = sessionHistory.map(s => s.time);
+            const lastTime = times[0];
+            const bestTime = Math.min(...times);
+            
+            // Last 5 Avg
+            const last5 = times.slice(0, 5);
+            const avgTime = Math.round(last5.reduce((a, b) => a + b, 0) / last5.length);
+
+            document.getElementById('statLast').innerText = lastTime;
+            document.getElementById('statBest').innerText = bestTime;
+            document.getElementById('statAvg').innerText = avgTime;
+            document.getElementById('statCount').innerText = sessionHistory.length;
+        }
+
+        function updateAnalyticsView() {
+            // Populate table
+            const tbody = document.getElementById('historyTableBody');
+            document.getElementById('chartTotalLabel').innerText = `${sessionHistory.length} Attempts`;
+
+            if (sessionHistory.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-slate-500 font-sans">
+                            No attempt history logged yet. Complete a speed test to view results!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = sessionHistory.map((item, idx) => {
+                const modeName = item.mode.charAt(0).toUpperCase() + item.mode.slice(1);
+                return `
+                    <tr class="hover:bg-slate-900/60 transition-colors">
+                        <td class="py-3 px-4 text-slate-500">#${sessionHistory.length - idx}</td>
+                        <td class="py-3 px-4 font-sans text-slate-300 capitalize">${modeName}</td>
+                        <td class="py-3 px-4 font-bold text-white">${item.time} ms</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded text-[11px] font-sans font-semibold" style="color: ${item.color}; background: ${item.color}15; border: 1px solid ${item.color}30;">
+                                ${item.tier}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-400 font-sans text-[11px]">${item.timestamp}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Calculate Tier Distribution percentages
+            const total = sessionHistory.length;
+            const counts = { elite: 0, good: 0, typical: 0, slower: 0 };
+
+            sessionHistory.forEach(s => {
+                if (s.time < 200) counts.elite++;
+                else if (s.time <= 250) counts.good++;
+                else if (s.time <= 300) counts.typical++;
+                else counts.slower++;
+            });
+
+            const pElite = Math.round((counts.elite / total) * 100);
+            const pGood = Math.round((counts.good / total) * 100);
+            const pAvg = Math.round((counts.typical / total) * 100);
+            const pSlow = Math.round((counts.slower / total) * 100);
+
+            document.getElementById('distEliteCount').innerText = `${pElite}% (${counts.elite})`;
+            document.getElementById('distGoodCount').innerText = `${pGood}% (${counts.good})`;
+            document.getElementById('distAvgCount').innerText = `${pAvg}% (${counts.typical})`;
+            document.getElementById('distSlowCount').innerText = `${pSlow}% (${counts.slower})`;
+
+            document.getElementById('distEliteBar').style.width = `${pElite}%`;
+            document.getElementById('distGoodBar').style.width = `${pGood}%`;
+            document.getElementById('distAvgBar').style.width = `${pAvg}%`;
+            document.getElementById('distSlowBar').style.width = `${pSlow}%`;
+
+            // Calculate Consistency Score (Standard Deviation)
+            if (total > 1) {
+                const mean = sessionHistory.reduce((a, b) => a + b.time, 0) / total;
+                const stdDev = Math.sqrt(sessionHistory.reduce((sq, n) => sq + Math.pow(n.time - mean, 2), 0) / total);
+                const score = Math.max(0, Math.round(100 - stdDev));
+                document.getElementById('consistencyScore').innerText = `${score}/100 (±${Math.round(stdDev)}ms)`;
+            }
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('reactionChart').getContext('2d');
+            
+            // Reverse copy so chart displays chronologically (oldest to newest)
+            const chronologicalData = [...sessionHistory].reverse();
+            const labels = chronologicalData.map((_, i) => `Trial ${i + 1}`);
+            const values = chronologicalData.map(d => d.time);
+
+            if (reactionChart) {
+                reactionChart.destroy();
+            }
+
+            reactionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Reaction Time (ms)',
+                        data: values,
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#818cf8',
+                        pointRadius: 4,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.parsed.y} ms`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 100,
+                            suggestedMax: 400,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono' } }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function clearHistory() {
+            sessionHistory = [];
+            document.getElementById('statLast').innerText = '--';
+            document.getElementById('statBest').innerText = '--';
+            document.getElementById('statAvg').innerText = '--';
+            document.getElementById('statCount').innerText = '0';
+            updateAnalyticsView();
+            renderChart();
+        }
+
+        window.onload = function() {
+            resetArenaUI();
+        };
+    </script>
+</body>
+</html>

@@ -76,7 +76,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('test')">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <i class="fa-solid fa-[#ffffff] fa-bolt text-xl text-white"></i>
+                    <i class="fa-solid fa-bolt text-xl text-white"></i>
                 </div>
                 <div>
                     <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">ReflexLab</span>
@@ -161,9 +161,9 @@
                 <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
 
                 <!-- TEST ARENA STATE CONTENT CONTAINER -->
-                <div id="arenaContent" class="relative z-10 max-w-lg mx-auto flex flex-col items-center pointer-events-none">
+                <div id="arenaContent" class="relative z-10 max-w-xl mx-auto flex flex-col items-center pointer-events-none">
                     
-                    <!-- Icon Placeholder -->
+                    <!-- Icon Placeholder / Avatar View -->
                     <div id="arenaIcon" class="w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110">
                         <i class="fa-solid fa-hand-pointer"></i>
                     </div>
@@ -179,16 +179,14 @@
                     </p>
 
                     <!-- Choice Test Container (Hidden by default) -->
-                    <div id="choicePrompt" class="hidden mt-6 flex gap-4 pointer-events-auto">
-                        <!-- Key cards will be generated dynamically -->
-                    </div>
+                    <div id="choicePrompt" class="hidden mt-6 flex gap-4 pointer-events-auto"></div>
 
                     <!-- Aim Canvas Overlay Container (Hidden by default) -->
                     <div id="aimTarget" class="hidden absolute w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-rose-400 border-4 border-white shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-transform active:scale-95 animate-ping-once"></div>
 
                     <!-- Prompt Key Helper -->
                     <div id="arenaHint" class="mt-8 text-xs font-mono text-slate-500 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800">
-                        Spacebar or Mouse Click supported
+                        Spacebar or Touch / Mouse Click supported
                     </div>
                 </div>
 
@@ -231,7 +229,7 @@
                 </div>
             </div>
 
-            <!-- QUICK TIER REFERENCE PANEL BELOW TEST AREA -->
+            <!-- QUICK TIER REFERENCE PANEL -->
             <div class="glass-card p-5 rounded-2xl border border-slate-800">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center">
@@ -291,7 +289,7 @@
 
             <!-- Charts Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Main Line Chart (History over time) -->
+                <!-- Main Line Chart -->
                 <div class="glass-card p-5 rounded-2xl lg:col-span-2 border border-slate-800 flex flex-col justify-between">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center">
@@ -311,7 +309,6 @@
                     </h3>
                     
                     <div class="space-y-3 flex-1 flex flex-col justify-center">
-                        <!-- Elite Bar -->
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
                                 <span class="text-cyan-400"><i class="fa-solid fa-crown mr-1"></i>Elite (&lt;200ms)</span>
@@ -322,7 +319,6 @@
                             </div>
                         </div>
 
-                        <!-- Good Bar -->
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
                                 <span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Good (200-250ms)</span>
@@ -333,7 +329,6 @@
                             </div>
                         </div>
 
-                        <!-- Average Bar -->
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
                                 <span class="text-amber-400"><i class="fa-solid fa-user text-xs mr-1"></i>Typical (250-300ms)</span>
@@ -344,7 +339,6 @@
                             </div>
                         </div>
 
-                        <!-- Slower Bar -->
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
                                 <span class="text-rose-400"><i class="fa-solid fa-bed mr-1"></i>Slower (&gt;300ms)</span>
@@ -415,7 +409,7 @@
                         </span>
                         <h3 class="text-xl font-bold text-white mt-3 mb-2">Under 200 ms</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Professional Formula 1 racers, fighter jet pilots, or top-tier competitive esports gamers (CS2, Valorant, League of Legends).
+                            Professional Formula 1 racers, fighter jet pilots, or top-tier competitive esports gamers.
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
@@ -435,7 +429,7 @@
                         </span>
                         <h3 class="text-xl font-bold text-white mt-3 mb-2">200 – 250 ms</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Good to average response speed for well-rested, healthy young adults with decent motor control and low-latency displays.
+                            Good to average response speed for well-rested, healthy young adults with decent motor control.
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
@@ -455,7 +449,7 @@
                         </span>
                         <h3 class="text-xl font-bold text-white mt-3 mb-2">250 – 300 ms</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Typical population average once standard online browser delays, Bluetooth mouse latency, and 60Hz display lag are included.
+                            Typical population average once standard browser delays and display latency are included.
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
@@ -475,32 +469,11 @@
                         </span>
                         <h3 class="text-xl font-bold text-white mt-3 mb-2">Over 300 ms</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Slower visual response time, often significantly influenced by fatigue, lack of sleep, multitasking distraction, or age.
+                            Slower visual response time, often significantly influenced by fatigue, lack of sleep, or distraction.
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
                         <i class="fa-solid fa-mug-hot text-rose-400 mr-1"></i> Rest, hydration, or focus exercises recommended.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hardware Lag Factor Explanation Box -->
-            <div class="glass-card p-6 rounded-3xl border border-slate-800 bg-slate-900/60">
-                <h3 class="text-base font-bold text-white mb-3 flex items-center">
-                    <i class="fa-solid fa-microchip text-indigo-400 mr-2"></i>Understanding The Hardware Latency Penalty
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300">
-                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-tv mr-1"></i> Monitor Refresh Rate</span>
-                        A 60Hz display updates every 16.6ms, while a 240Hz monitor updates every 4.1ms. High refresh rates reduce visual delay dramatically.
-                    </div>
-                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-mouse mr-1"></i> Peripheral Input Lag</span>
-                        Wireless Bluetooth mice can add 10ms to 30ms of latency compared to high-polling wired gaming mice (1000Hz+).
-                    </div>
-                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                        <span class="font-bold text-indigo-300 block mb-1"><i class="fa-solid fa-globe mr-1"></i> Browser Frame Processing</span>
-                        Web browsers process DOM updates in event loops, which can introduce an inherent 10–20ms measurement overhead.
                     </div>
                 </div>
             </div>
@@ -519,63 +492,16 @@
                 </div>
 
                 <div class="space-y-6 text-sm text-slate-300 leading-relaxed">
-                    <!-- Section 1 -->
                     <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
                         <h3 class="text-base font-bold text-white mb-2 flex items-center">
                             <i class="fa-solid fa-route text-cyan-400 mr-2"></i>1. The Neural Pathway (What happens in ~200 milliseconds)
                         </h3>
                         <ol class="list-decimal list-inside space-y-2 text-xs sm:text-sm text-slate-400">
-                            <li><strong class="text-slate-200">Sensory Perception (~20-40ms):</strong> Light photons strike the retina, activating photoreceptors that trigger electrical impulses down the optic nerve.</li>
-                            <li><strong class="text-slate-200">Brain Processing (~60-100ms):</strong> Signal reaches the primary visual cortex, moves to the motor cortex to decide the response.</li>
-                            <li><strong class="text-slate-200">Motor Signal Transmission (~30-50ms):</strong> Signal travels down the spinal cord and peripheral nerves to finger flexor muscles.</li>
-                            <li><strong class="text-slate-200">Muscle Activation (~20-30ms):</strong> Muscle fibers contract and actuate the mechanical mouse switch.</li>
+                            <li><strong class="text-slate-200">Sensory Perception (~20-40ms):</strong> Photons strike retina, creating electrical impulses down optic nerve.</li>
+                            <li><strong class="text-slate-200">Brain Processing (~60-100ms):</strong> Signal reaches visual cortex, moving to motor cortex to decide action.</li>
+                            <li><strong class="text-slate-200">Motor Signal Transmission (~30-50ms):</strong> Signal travels down spinal cord to finger muscles.</li>
+                            <li><strong class="text-slate-200">Muscle Activation (~20-30ms):</strong> Finger muscles contract and press mouse button.</li>
                         </ol>
-                    </div>
-
-                    <!-- Section 2 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
-                            <h4 class="font-bold text-emerald-400 mb-2 flex items-center">
-                                <i class="fa-solid fa-bolt mr-2"></i>Simple Reaction Time
-                            </h4>
-                            <p class="text-xs text-slate-400">
-                                Occurs when there is only one stimulus and one response (e.g., clicking as soon as red turns green). Simple reaction times are the fastest, averaging around 190–240ms in optimal conditions.
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
-                            <h4 class="font-bold text-amber-400 mb-2 flex items-center">
-                                <i class="fa-solid fa-code-branch mr-2"></i>Choice Reaction Time
-                            </h4>
-                            <p class="text-xs text-slate-400">
-                                Requires processing multiple stimuli and making a decision (e.g., matching key 'A' or 'S' based on prompt). Choice reaction time takes longer (typically +100ms to 200ms additional cognitive delay).
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Section 3 -->
-                    <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-3">
-                        <h3 class="text-base font-bold text-white flex items-center">
-                            <i class="fa-solid fa-arrow-trend-up text-indigo-400 mr-2"></i>Key Factors Influencing Your Reaction Times
-                        </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-bed text-purple-400 mr-1"></i> Sleep & Fatigue</span>
-                                Sleep deprivation slows neural transmission rates similarly to mild alcohol consumption.
-                            </div>
-                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-coffee text-amber-400 mr-1"></i> Caffeine & Hydration</span>
-                                Mild caffeine intake boosts alertness and can shave 10-20ms off response times.
-                            </div>
-                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-person-cane text-rose-400 mr-1"></i> Age Peak</span>
-                                Biological reaction speeds generally peak between ages 18 and 24, declining gradually thereafter.
-                            </div>
-                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                                <span class="font-bold text-slate-200 block"><i class="fa-solid fa-bullseye text-emerald-400 mr-1"></i> Focus & Anticipation</span>
-                                High mental strain or multitasking reduces available cognitive bandwidth, slowing reactions above 300ms.
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -597,7 +523,7 @@
     </footer>
 
     <script>
-        // State Variables
+        // Application State
         let currentMode = 'visual'; // visual, audio, choice, aim
         let gameState = 'idle'; // idle, waiting, ready, finished
         let startTime = 0;
@@ -605,12 +531,13 @@
         let soundEnabled = true;
         let sessionHistory = [];
         let reactionChart = null;
+        let lastFinishTime = 0;
 
         // Choice Mode Setup
         const choiceKeys = ['A', 'S', 'D', 'F'];
         let activeChoiceKey = '';
 
-        // Web Audio Synthesizer for latency-free sound effects
+        // Synthesizer Audio Engine
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playTone(freq, type = 'sine', duration = 0.1, volume = 0.15) {
@@ -636,13 +563,12 @@
 
         function playSuccessSound(ms) {
             if (ms < 200) {
-                // Elite chime
-                playTone(587.33, 'triangle', 0.1, 0.2); // D5
-                setTimeout(() => playTone(880, 'triangle', 0.2, 0.25), 80); // A5
-            } else if (ms < 250) {
-                playTone(523.25, 'sine', 0.15, 0.2); // C5
+                playTone(587.33, 'triangle', 0.1, 0.2);
+                setTimeout(() => playTone(880, 'triangle', 0.2, 0.25), 80);
+            } else if (ms <= 250) {
+                playTone(523.25, 'sine', 0.15, 0.2);
             } else {
-                playTone(349.23, 'sine', 0.15, 0.2); // F4
+                playTone(349.23, 'sine', 0.15, 0.2);
             }
         }
 
@@ -661,11 +587,9 @@
         }
 
         function switchTab(tabId) {
-            // Hide all tab contents
             document.querySelectorAll('.tab-page').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tabId}-content`).classList.remove('hidden');
 
-            // Reset tab button states
             const navButtons = ['test', 'analytics', 'benchmarks', 'science'];
             navButtons.forEach(btn => {
                 const el = document.getElementById(`nav-${btn}`);
@@ -691,7 +615,6 @@
             currentMode = mode;
             gameState = 'idle';
 
-            // Reset mode buttons styling
             document.querySelectorAll('.mode-btn').forEach(btn => {
                 btn.className = 'mode-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700';
             });
@@ -742,24 +665,20 @@
             }
         }
 
-        // Arena Click / Interaction Handler
         const arenaEl = document.getElementById('arena');
 
-        arenaEl.addEventListener('mousedown', (e) => {
-            // Ignore if aim target was clicked directly (handled separately)
-            if (currentMode === 'aim' && e.target.id === 'aimTarget') return;
+        arenaEl.addEventListener('pointerdown', (e) => {
+            if (currentMode === 'aim' && (e.target.id === 'aimTarget' || e.target.closest('#aimTarget'))) return;
+            if (currentMode === 'choice' && e.target.closest('#choicePrompt')) return;
             handleUserTrigger();
         });
 
-        // Keyboard triggers
         window.addEventListener('keydown', (e) => {
-            // Check if space bar pressed during test tab
             if (e.code === 'Space' && !document.getElementById('tab-test-content').classList.contains('hidden')) {
                 e.preventDefault();
                 handleUserTrigger();
             }
 
-            // Choice mode keyboard matching
             if (currentMode === 'choice' && gameState === 'ready') {
                 const keyUpper = e.key.toUpperCase();
                 if (choiceKeys.includes(keyUpper)) {
@@ -773,13 +692,16 @@
         });
 
         function handleUserTrigger() {
+            if (gameState === 'finished' && (performance.now() - lastFinishTime < 250)) {
+                return;
+            }
+
             if (gameState === 'idle' || gameState === 'finished') {
                 startTestSequence();
             } else if (gameState === 'waiting') {
                 triggerFalseStart("Too early! Wait for the signal.");
             } else if (gameState === 'ready') {
-                if (currentMode === 'choice') {
-                    // Requires specific key press, ignore general clicks
+                if (currentMode === 'choice' || currentMode === 'aim') {
                     return;
                 }
                 finishTest();
@@ -797,15 +719,15 @@
             resultBadge.classList.add('hidden');
             arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-rose-950/40 border-2 border-rose-500/50 shadow-2xl overflow-hidden";
             
+            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
             icon.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-rose-400"></i>';
-            title.innerText = "Wait for Green...";
+            title.innerText = "Wait for Signal...";
             desc.innerText = "Prepare your finger...";
 
             if (currentMode === 'choice') {
                 document.getElementById('choicePrompt').classList.add('hidden');
             }
 
-            // Random delay between 1.5 seconds and 4.5 seconds
             const delay = Math.floor(Math.random() * 3000) + 1500;
 
             timerTimeout = setTimeout(() => {
@@ -824,18 +746,19 @@
         function triggerFalseStart(msg) {
             cancelWait();
             playErrorSound();
-            
+
             const arena = document.getElementById('arena');
             const icon = document.getElementById('arenaIcon');
             const title = document.getElementById('arenaTitle');
             const desc = document.getElementById('arenaDesc');
 
-            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-amber-950/40 border-2 border-amber-500/60 shadow-2xl overflow-hidden";
-            icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>';
-            title.innerText = "False Start!";
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-rose-950/80 border-2 border-rose-500 shadow-2xl overflow-hidden";
+            icon.className = "w-20 h-20 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-3xl mb-5";
+            icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            title.innerText = "Too Early!";
             desc.innerText = msg + " Click to try again.";
-            
-            gameState = 'idle';
+            gameState = 'finished';
+            lastFinishTime = performance.now();
         }
 
         function triggerReadyState() {
@@ -848,32 +771,36 @@
             const desc = document.getElementById('arenaDesc');
 
             if (currentMode === 'visual') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-emerald-600 border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.5)] overflow-hidden";
-                icon.innerHTML = '<i class="fa-solid fa-bolt text-white text-4xl animate-bounce-short"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-emerald-600 border-2 border-emerald-400 shadow-2xl overflow-hidden";
+                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-bounce";
+                icon.innerHTML = '<i class="fa-solid fa-bolt"></i>';
                 title.innerText = "CLICK NOW!";
-                desc.innerText = "";
+                desc.innerText = "Click or tap as fast as possible!";
+                playTone(600, 'sine', 0.15, 0.25);
             } else if (currentMode === 'audio') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-indigo-600 border-2 border-indigo-400 shadow-[0_0_50px_rgba(99,102,241,0.5)] overflow-hidden";
-                icon.innerHTML = '<i class="fa-solid fa-volume-high text-white text-4xl"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-indigo-600 border-2 border-indigo-400 shadow-2xl overflow-hidden";
+                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-ping-once";
+                icon.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
                 title.innerText = "CLICK NOW!";
-                desc.innerText = "Audio cue emitted!";
-                playTone(880, 'sine', 0.3, 0.4); // Trigger crisp 880Hz beep
+                desc.innerText = "Beep sounded!";
+                playTone(880, 'sine', 0.2, 0.3);
             } else if (currentMode === 'choice') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-slate-700 shadow-2xl overflow-hidden";
-                
-                // Pick random key from choiceKeys
                 activeChoiceKey = choiceKeys[Math.floor(Math.random() * choiceKeys.length)];
-                
-                title.innerText = `PRESS KEY: [ ${activeChoiceKey} ]`;
-                desc.innerText = "Hit the correct key on your keyboard!";
-                
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-indigo-500 shadow-2xl overflow-hidden";
+                icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center text-3xl mb-5";
+                icon.innerHTML = '<i class="fa-solid fa-keyboard"></i>';
+                title.innerText = `PRESS KEY: ${activeChoiceKey}`;
+                desc.innerText = `Press ${activeChoiceKey} on your keyboard or tap below!`;
                 renderChoiceKeys();
-                playTone(600, 'sine', 0.1, 0.2);
+                playTone(700, 'sine', 0.1, 0.2);
             } else if (currentMode === 'aim') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-slate-700 shadow-2xl overflow-hidden";
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-red-500 shadow-2xl overflow-hidden";
+                icon.className = "w-20 h-20 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center text-3xl mb-5";
+                icon.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
                 title.innerText = "HIT THE TARGET!";
-                desc.innerText = "";
+                desc.innerText = "Click the target target immediately!";
                 spawnAimTarget();
+                playTone(750, 'sine', 0.1, 0.2);
             }
         }
 
@@ -885,12 +812,24 @@
             choiceKeys.forEach(k => {
                 const btn = document.createElement('div');
                 const isActive = (k === activeChoiceKey);
-                btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center font-mono text-xl font-bold border-2 transition-all shadow-lg ${
+                btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center font-mono text-xl font-bold border-2 transition-all shadow-lg cursor-pointer ${
                     isActive 
                         ? 'bg-indigo-600 border-white text-white scale-110 shadow-indigo-500/50 animate-pulse' 
                         : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`;
                 btn.innerText = k;
+
+                btn.addEventListener('pointerdown', (e) => {
+                    e.stopPropagation();
+                    if (gameState === 'ready') {
+                        if (k === activeChoiceKey) {
+                            finishTest();
+                        } else {
+                            triggerFalseStart("Wrong key pressed!");
+                        }
+                    }
+                });
+
                 container.appendChild(btn);
             });
         }
@@ -899,7 +838,6 @@
             const arena = document.getElementById('arena');
             const target = document.getElementById('aimTarget');
             
-            // Random position within 20% to 80% bounds
             const rect = arena.getBoundingClientRect();
             const posX = Math.floor(Math.random() * (rect.width * 0.6)) + (rect.width * 0.2);
             const posY = Math.floor(Math.random() * (rect.height * 0.5)) + (rect.height * 0.25);
@@ -908,7 +846,7 @@
             target.style.top = `${posY}px`;
             target.classList.remove('hidden');
 
-            target.onclick = (e) => {
+            target.onpointerdown = (e) => {
                 e.stopPropagation();
                 if (gameState === 'ready') {
                     finishTest();
@@ -920,18 +858,13 @@
             const endTime = performance.now();
             const reactionMs = Math.round(endTime - startTime);
             gameState = 'finished';
+            lastFinishTime = performance.now();
 
             document.getElementById('aimTarget').classList.add('hidden');
             playSuccessSound(reactionMs);
 
-            // Determine Tier Rank based on prompt specs:
-            // <200ms: Elite
-            // 200-250ms: Good
-            // 250-300ms: Typical
-            // >300ms: Slower
             let tierInfo = getTierClassification(reactionMs);
 
-            // Record Log
             const attempt = {
                 id: Date.now(),
                 mode: currentMode,
@@ -940,27 +873,27 @@
                 color: tierInfo.colorClass,
                 timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
             };
-            // Check tier score for custom avatar popups
+            sessionHistory.unshift(attempt);
+
+            const arena = document.getElementById('arena');
+            const icon = document.getElementById('arenaIcon');
+            const title = document.getElementById('arenaTitle');
+            const desc = document.getElementById('arenaDesc');
+            const resultBadge = document.getElementById('resultBadge');
+
+            arena.className = `relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 ${tierInfo.borderClass} shadow-2xl overflow-hidden`;
+
             if (tierInfo.key === 'elite') {
                 icon.className = "mb-4 flex flex-col items-center justify-center";
                 icon.innerHTML = `
                     <div class="flex flex-col items-center my-2 animate-bounce-short">
                         <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/michalll.jpg" 
                              alt="Elite Score Face" 
-                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-cyan-400 shadow-2xl" 
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-cyan-500 shadow-2xl" 
                              onerror="this.src='https://placehold.co/160x160/06b6d4/ffffff?text=ELITE'">
-                        <span class="text-rose-500 font-black text-lg sm:text-2xl uppercase tracking-wider mt-3 animate-bounce text-center max-w-md drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">MAYBE THIS IS THE ONLY STUPID WHICH I KNOW THAT CAN REACH THIS LEVEL...</span>
-                    </div>
-                `;
-            } else if (tierInfo.key === 'typical') {
-                icon.className = "mb-4 flex flex-col items-center justify-center";
-                icon.innerHTML = `
-                    <div class="flex flex-col items-center my-2 animate-bounce-short">
-                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/abunene.png" 
-                             alt="Typical Average Face" 
-                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-rose-600 shadow-2xl" 
-                             onerror="this.src='https://placehold.co/160x160/ef4444/ffffff?text=STUPID'">
-                        <span class="text-rose-500 font-black text-4xl sm:text-6xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">STUPID!</span>
+                        <span class="text-rose-500 font-black text-lg sm:text-xl uppercase tracking-wider mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] max-w-md text-center">
+                            MAYBE THIS IS THE ONLY STUPID WHICH I KNOW THAT CAN REACH THIS LEVEL...
+                        </span>
                     </div>
                 `;
             } else if (tierInfo.key === 'good') {
@@ -971,7 +904,22 @@
                              alt="Good Score Face" 
                              class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-emerald-500 shadow-2xl" 
                              onerror="this.src='https://placehold.co/160x160/10b981/ffffff?text=STRONG'">
-                        <span class="text-rose-500 font-black text-2xl sm:text-4xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">WOOR SO STRONG BRO!</span>
+                        <span class="text-rose-500 font-black text-2xl sm:text-4xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">
+                            WOOR SO STRONG BRO!
+                        </span>
+                    </div>
+                `;
+            } else if (tierInfo.key === 'typical') {
+                icon.className = "mb-4 flex flex-col items-center justify-center";
+                icon.innerHTML = `
+                    <div class="flex flex-col items-center my-2 animate-bounce-short">
+                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/abunene.png" 
+                             alt="Typical Average Face" 
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-rose-600 shadow-2xl" 
+                             onerror="this.src='https://placehold.co/160x160/ef4444/ffffff?text=NOOB'">
+                        <span class="text-rose-500 font-black text-4xl sm:text-6xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">
+                            NOOB!
+                        </span>
                     </div>
                 `;
             } else {
@@ -1058,7 +1006,6 @@
             const lastTime = times[0];
             const bestTime = Math.min(...times);
             
-            // Last 5 Avg
             const last5 = times.slice(0, 5);
             const avgTime = Math.round(last5.reduce((a, b) => a + b, 0) / last5.length);
 
@@ -1069,7 +1016,6 @@
         }
 
         function updateAnalyticsView() {
-            // Populate table
             const tbody = document.getElementById('historyTableBody');
             document.getElementById('chartTotalLabel').innerText = `${sessionHistory.length} Attempts`;
 
@@ -1101,7 +1047,6 @@
                 `;
             }).join('');
 
-            // Calculate Tier Distribution percentages
             const total = sessionHistory.length;
             const counts = { elite: 0, good: 0, typical: 0, slower: 0 };
 
@@ -1127,7 +1072,6 @@
             document.getElementById('distAvgBar').style.width = `${pAvg}%`;
             document.getElementById('distSlowBar').style.width = `${pSlow}%`;
 
-            // Calculate Consistency Score (Standard Deviation)
             if (total > 1) {
                 const mean = sessionHistory.reduce((a, b) => a + b.time, 0) / total;
                 const stdDev = Math.sqrt(sessionHistory.reduce((sq, n) => sq + Math.pow(n.time - mean, 2), 0) / total);
@@ -1139,7 +1083,6 @@
         function renderChart() {
             const ctx = document.getElementById('reactionChart').getContext('2d');
             
-            // Reverse copy so chart displays chronologically (oldest to newest)
             const chronologicalData = [...sessionHistory].reverse();
             const labels = chronologicalData.map((_, i) => `Trial ${i + 1}`);
             const values = chronologicalData.map(d => d.time);

@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ReflexLab - Reaction Speed & Performance Test</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -67,10 +67,15 @@
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .instant-feedback {
+            transition: none !important;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white custom-scrollbar">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white custom-scrollbar unselectable">
 
     <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -155,26 +160,26 @@
             </div>
 
             <!-- MAIN INTERACTIVE ARENA -->
-            <div id="arena" class="relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group">
+            <div id="arena" class="relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group instant-feedback">
                 
                 <!-- Dynamic Background Pulse Grid -->
                 <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
 
                 <!-- TEST ARENA STATE CONTENT CONTAINER -->
-                <div id="arenaContent" class="relative z-10 max-w-xl mx-auto flex flex-col items-center pointer-events-none">
+                <div id="arenaContent" class="relative z-10 max-w-xl mx-auto flex flex-col items-center pointer-events-none select-none">
                     
                     <!-- Icon Placeholder / Avatar View -->
-                    <div id="arenaIcon" class="w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110">
+                    <div id="arenaIcon" class="w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 pointer-events-none">
                         <i class="fa-solid fa-hand-pointer"></i>
                     </div>
 
                     <!-- Title Header -->
-                    <h2 id="arenaTitle" class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 text-white">
+                    <h2 id="arenaTitle" class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 text-white pointer-events-none">
                         Click Anywhere to Start
                     </h2>
 
                     <!-- Subtitle / Instruction -->
-                    <p id="arenaDesc" class="text-slate-400 text-base sm:text-lg font-medium leading-relaxed max-w-md">
+                    <p id="arenaDesc" class="text-slate-400 text-base sm:text-lg font-medium leading-relaxed max-w-md pointer-events-none">
                         When the screen changes color to green, click or tap as quickly as you can.
                     </p>
 
@@ -182,19 +187,18 @@
                     <div id="choicePrompt" class="hidden mt-6 flex gap-4 pointer-events-auto"></div>
 
                     <!-- Aim Canvas Overlay Container (Hidden by default) -->
-                    <div id="aimTarget" class="hidden absolute w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-rose-400 border-4 border-white shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-transform active:scale-95 animate-ping-once"></div>
+                    <div id="aimTarget" class="hidden absolute w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-rose-400 border-4 border-white shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-transform active:scale-95 pointer-events-auto"></div>
 
                     <!-- Prompt Key Helper -->
-                    <div id="arenaHint" class="mt-8 text-xs font-mono text-slate-500 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <div id="arenaHint" class="mt-8 text-xs font-mono text-slate-500 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800 pointer-events-none">
                         Spacebar or Touch / Mouse Click supported
                     </div>
                 </div>
 
                 <!-- Overlay feedback badge when click finishes -->
-                <div id="resultBadge" class="hidden absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg"></div>
+                <div id="resultBadge" class="hidden absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg pointer-events-none"></div>
             </div>
 
-            <!-- LIVE SESSION SUMMARY CARDS -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-stopwatch text-indigo-400 mr-1.5"></i>Last Attempt</span>
@@ -399,7 +403,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Tier 1: Elite -->
                 <div class="glass-card rounded-3xl p-6 border border-cyan-500/30 bg-gradient-to-b from-cyan-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-cyan-500/20 transition-all"></div>
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-xl mb-4 font-bold">
                             &lt; 200
@@ -419,7 +422,6 @@
 
                 <!-- Tier 2: Good -->
                 <div class="glass-card rounded-3xl p-6 border border-emerald-500/30 bg-gradient-to-b from-emerald-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-emerald-500/20 transition-all"></div>
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xl mb-4 font-bold">
                             200-250
@@ -439,7 +441,6 @@
 
                 <!-- Tier 3: Typical -->
                 <div class="glass-card rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-b from-amber-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-amber-500/20 transition-all"></div>
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-xl mb-4 font-bold">
                             250-300
@@ -459,7 +460,6 @@
 
                 <!-- Tier 4: Slower -->
                 <div class="glass-card rounded-3xl p-6 border border-rose-500/30 bg-gradient-to-b from-rose-950/20 to-slate-900 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-rose-500/20 transition-all"></div>
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xl mb-4 font-bold">
                             &gt; 300
@@ -636,29 +636,29 @@
             const aimTarget = document.getElementById('aimTarget');
             const resultBadge = document.getElementById('resultBadge');
 
-            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group";
-            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-slate-900 border-2 border-slate-800 hover:border-slate-700 shadow-2xl overflow-hidden group instant-feedback";
+            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 pointer-events-none";
             choicePrompt.classList.add('hidden');
             aimTarget.classList.add('hidden');
             resultBadge.classList.add('hidden');
 
             if (currentMode === 'visual') {
-                icon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                icon.innerHTML = '<i class="fa-solid fa-eye pointer-events-none"></i>';
                 title.innerText = 'Visual Click Test';
                 desc.innerText = 'Click anywhere when the box turns bright GREEN.';
                 hint.innerText = 'Click or Press Spacebar';
             } else if (currentMode === 'audio') {
-                icon.innerHTML = '<i class="fa-solid fa-headphones"></i>';
+                icon.innerHTML = '<i class="fa-solid fa-headphones pointer-events-none"></i>';
                 title.innerText = 'Audio Beep Test';
                 desc.innerText = 'Click immediately when you hear the high-pitched beep tone.';
                 hint.innerText = 'Click or Press Spacebar';
             } else if (currentMode === 'choice') {
-                icon.innerHTML = '<i class="fa-solid fa-hand-pointer"></i>';
+                icon.innerHTML = '<i class="fa-solid fa-hand-pointer pointer-events-none"></i>';
                 title.innerText = '4-Choice Key Reaction';
                 desc.innerText = 'Press the matching key (A, S, D, F) as soon as it lights up.';
                 hint.innerText = 'Use Keyboard Keys: A, S, D, F';
             } else if (currentMode === 'aim') {
-                icon.innerHTML = '<i class="fa-solid fa-crosshair"></i>';
+                icon.innerHTML = '<i class="fa-solid fa-crosshair pointer-events-none"></i>';
                 title.innerText = 'Precision Aim Reaction';
                 desc.innerText = 'Click the red target sphere as fast as you can when it spawns.';
                 hint.innerText = 'Click Target Directly';
@@ -667,23 +667,30 @@
 
         const arenaEl = document.getElementById('arena');
 
-        arenaEl.addEventListener('pointerdown', (e) => {
+        function onPointerDownHandler(e) {
+            const inputTime = performance.now();
+            
+            // Check if clicking choice button or aim target directly
             if (currentMode === 'aim' && (e.target.id === 'aimTarget' || e.target.closest('#aimTarget'))) return;
             if (currentMode === 'choice' && e.target.closest('#choicePrompt')) return;
-            handleUserTrigger();
-        });
+            
+            handleUserTrigger(inputTime);
+        }
+
+        arenaEl.addEventListener('pointerdown', onPointerDownHandler);
 
         window.addEventListener('keydown', (e) => {
+            const inputTime = performance.now();
             if (e.code === 'Space' && !document.getElementById('tab-test-content').classList.contains('hidden')) {
                 e.preventDefault();
-                handleUserTrigger();
+                handleUserTrigger(inputTime);
             }
 
             if (currentMode === 'choice' && gameState === 'ready') {
                 const keyUpper = e.key.toUpperCase();
                 if (choiceKeys.includes(keyUpper)) {
                     if (keyUpper === activeChoiceKey) {
-                        finishTest();
+                        finishTest(inputTime);
                     } else {
                         triggerFalseStart("Wrong key pressed!");
                     }
@@ -691,8 +698,9 @@
             }
         });
 
-        function handleUserTrigger() {
-            if (gameState === 'finished' && (performance.now() - lastFinishTime < 250)) {
+        function handleUserTrigger(inputTime = performance.now()) {
+            // Reduced delay buffer to 100ms for instant restart responsiveness
+            if (gameState === 'finished' && (inputTime - lastFinishTime < 100)) {
                 return;
             }
 
@@ -704,7 +712,7 @@
                 if (currentMode === 'choice' || currentMode === 'aim') {
                     return;
                 }
-                finishTest();
+                finishTest(inputTime);
             }
         }
 
@@ -717,10 +725,10 @@
             const resultBadge = document.getElementById('resultBadge');
 
             resultBadge.classList.add('hidden');
-            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-rose-950/40 border-2 border-rose-500/50 shadow-2xl overflow-hidden";
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-rose-950/40 border-2 border-rose-500/50 shadow-2xl overflow-hidden instant-feedback";
             
-            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
-            icon.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-rose-400"></i>';
+            icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 pointer-events-none";
+            icon.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-rose-400 pointer-events-none"></i>';
             title.innerText = "Wait for Signal...";
             desc.innerText = "Prepare your finger...";
 
@@ -752,9 +760,9 @@
             const title = document.getElementById('arenaTitle');
             const desc = document.getElementById('arenaDesc');
 
-            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-rose-950/80 border-2 border-rose-500 shadow-2xl overflow-hidden";
-            icon.className = "w-20 h-20 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-3xl mb-5";
-            icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-rose-950/80 border-2 border-rose-500 shadow-2xl overflow-hidden instant-feedback";
+            icon.className = "w-20 h-20 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-3xl mb-5 pointer-events-none";
+            icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation pointer-events-none"></i>';
             title.innerText = "Too Early!";
             desc.innerText = msg + " Click to try again.";
             gameState = 'finished';
@@ -763,7 +771,6 @@
 
         function triggerReadyState() {
             gameState = 'ready';
-            startTime = performance.now();
 
             const arena = document.getElementById('arena');
             const icon = document.getElementById('arenaIcon');
@@ -771,37 +778,42 @@
             const desc = document.getElementById('arenaDesc');
 
             if (currentMode === 'visual') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-emerald-600 border-2 border-emerald-400 shadow-2xl overflow-hidden";
-                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-bounce";
-                icon.innerHTML = '<i class="fa-solid fa-bolt"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-emerald-600 border-2 border-emerald-400 shadow-2xl overflow-hidden instant-feedback";
+                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-bounce pointer-events-none";
+                icon.innerHTML = '<i class="fa-solid fa-bolt pointer-events-none"></i>';
                 title.innerText = "CLICK NOW!";
                 desc.innerText = "Click or tap as fast as possible!";
                 playTone(600, 'sine', 0.15, 0.25);
             } else if (currentMode === 'audio') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-indigo-600 border-2 border-indigo-400 shadow-2xl overflow-hidden";
-                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-ping-once";
-                icon.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-indigo-600 border-2 border-indigo-400 shadow-2xl overflow-hidden instant-feedback";
+                icon.className = "w-20 h-20 rounded-2xl bg-white/20 border border-white/40 text-white flex items-center justify-center text-3xl mb-5 animate-ping-once pointer-events-none";
+                icon.innerHTML = '<i class="fa-solid fa-volume-high pointer-events-none"></i>';
                 title.innerText = "CLICK NOW!";
                 desc.innerText = "Beep sounded!";
                 playTone(880, 'sine', 0.2, 0.3);
             } else if (currentMode === 'choice') {
                 activeChoiceKey = choiceKeys[Math.floor(Math.random() * choiceKeys.length)];
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-indigo-500 shadow-2xl overflow-hidden";
-                icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center text-3xl mb-5";
-                icon.innerHTML = '<i class="fa-solid fa-keyboard"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-slate-900 border-2 border-indigo-500 shadow-2xl overflow-hidden instant-feedback";
+                icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center text-3xl mb-5 pointer-events-none";
+                icon.innerHTML = '<i class="fa-solid fa-keyboard pointer-events-none"></i>';
                 title.innerText = `PRESS KEY: ${activeChoiceKey}`;
                 desc.innerText = `Press ${activeChoiceKey} on your keyboard or tap below!`;
                 renderChoiceKeys();
                 playTone(700, 'sine', 0.1, 0.2);
             } else if (currentMode === 'aim') {
-                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-100 bg-slate-900 border-2 border-red-500 shadow-2xl overflow-hidden";
-                icon.className = "w-20 h-20 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center text-3xl mb-5";
-                icon.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
+                arena.className = "relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-slate-900 border-2 border-red-500 shadow-2xl overflow-hidden instant-feedback";
+                icon.className = "w-20 h-20 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center text-3xl mb-5 pointer-events-none";
+                icon.innerHTML = '<i class="fa-solid fa-bullseye pointer-events-none"></i>';
                 title.innerText = "HIT THE TARGET!";
-                desc.innerText = "Click the target target immediately!";
+                desc.innerText = "Click the target immediately!";
                 spawnAimTarget();
                 playTone(750, 'sine', 0.1, 0.2);
             }
+
+            // Sync start timestamp precisely with display paint
+            requestAnimationFrame(() => {
+                startTime = performance.now();
+            });
         }
 
         function renderChoiceKeys() {
@@ -812,7 +824,7 @@
             choiceKeys.forEach(k => {
                 const btn = document.createElement('div');
                 const isActive = (k === activeChoiceKey);
-                btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center font-mono text-xl font-bold border-2 transition-all shadow-lg cursor-pointer ${
+                btn.className = `w-14 h-14 rounded-2xl flex items-center justify-center font-mono text-xl font-bold border-2 shadow-lg cursor-pointer unselectable ${
                     isActive 
                         ? 'bg-indigo-600 border-white text-white scale-110 shadow-indigo-500/50 animate-pulse' 
                         : 'bg-slate-800 border-slate-700 text-slate-400'
@@ -820,10 +832,11 @@
                 btn.innerText = k;
 
                 btn.addEventListener('pointerdown', (e) => {
+                    const clickTime = performance.now();
                     e.stopPropagation();
                     if (gameState === 'ready') {
                         if (k === activeChoiceKey) {
-                            finishTest();
+                            finishTest(clickTime);
                         } else {
                             triggerFalseStart("Wrong key pressed!");
                         }
@@ -847,16 +860,16 @@
             target.classList.remove('hidden');
 
             target.onpointerdown = (e) => {
+                const clickTime = performance.now();
                 e.stopPropagation();
                 if (gameState === 'ready') {
-                    finishTest();
+                    finishTest(clickTime);
                 }
             };
         }
 
-        function finishTest() {
-            const endTime = performance.now();
-            const reactionMs = Math.round(endTime - startTime);
+        function finishTest(endTime = performance.now()) {
+            const reactionMs = Math.max(1, Math.round(endTime - startTime));
             gameState = 'finished';
             lastFinishTime = performance.now();
 
@@ -881,57 +894,71 @@
             const desc = document.getElementById('arenaDesc');
             const resultBadge = document.getElementById('resultBadge');
 
-            arena.className = `relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 bg-slate-900 border-2 ${tierInfo.borderClass} shadow-2xl overflow-hidden`;
+            arena.className = `relative unselectable flex-1 min-h-[380px] sm:min-h-[460px] rounded-3xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-slate-900 border-2 ${tierInfo.borderClass} shadow-2xl overflow-hidden instant-feedback`;
 
             if (tierInfo.key === 'elite') {
-                icon.className = "mb-4 flex flex-col items-center justify-center";
+                icon.className = "mb-4 flex flex-col items-center justify-center pointer-events-none select-none";
                 icon.innerHTML = `
-                    <div class="flex flex-col items-center my-2 animate-bounce-short">
+                    <div class="flex flex-col items-center my-2 animate-bounce-short pointer-events-none select-none">
                         <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/michalll.jpg" 
                              alt="Elite Score Face" 
-                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-cyan-500 shadow-2xl" 
+                             draggable="false"
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-cyan-500 shadow-2xl pointer-events-none select-none" 
                              onerror="this.src='https://placehold.co/160x160/06b6d4/ffffff?text=ELITE'">
-                        <span class="text-rose-500 font-black text-lg sm:text-xl uppercase tracking-wider mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] max-w-md text-center">
-                            MAYBE THIS IS THE ONLY STUPID WHICH I KNOW THAT CAN REACH THIS LEVEL...
+                        <span class="text-rose-500 font-black text-lg sm:text-xl uppercase tracking-wider mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] max-w-md text-center pointer-events-none select-none">
+                            STUPID THAT CAN REACH THIS LEVEL
                         </span>
                     </div>
                 `;
             } else if (tierInfo.key === 'good') {
-                icon.className = "mb-4 flex flex-col items-center justify-center";
+                icon.className = "mb-4 flex flex-col items-center justify-center pointer-events-none select-none";
                 icon.innerHTML = `
-                    <div class="flex flex-col items-center my-2 animate-bounce-short">
+                    <div class="flex flex-col items-center my-2 animate-bounce-short pointer-events-none select-none">
                         <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/kelun.jpg" 
                              alt="Good Score Face" 
-                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-emerald-500 shadow-2xl" 
+                             draggable="false"
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-emerald-500 shadow-2xl pointer-events-none select-none" 
                              onerror="this.src='https://placehold.co/160x160/10b981/ffffff?text=STRONG'">
-                        <span class="text-rose-500 font-black text-2xl sm:text-4xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)]">
+                        <span class="text-rose-500 font-black text-2xl sm:text-4xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] pointer-events-none select-none">
                             WOOR SO STRONG BRO!
                         </span>
                     </div>
                 `;
-            } else if (tierInfo.key === 'typical' || tierInfo.key === 'slower') {
-                icon.className = "mb-4 flex flex-col items-center justify-center";
+            } else if (tierInfo.key === 'typical') {
+                icon.className = "mb-4 flex flex-col items-center justify-center pointer-events-none select-none";
                 icon.innerHTML = `
-                    <div class="flex flex-col items-center my-2 animate-bounce-short">
-                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/leh.webp" 
+                    <div class="flex flex-col items-center my-2 animate-bounce-short pointer-events-none select-none">
+                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/abunene.png" 
                              alt="Typical Average Face" 
-                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-amber-500 shadow-2xl" 
-                             onerror="this.src='https://placehold.co/160x160/f59e0b/ffffff?text=LEH'">
-                        <span class="text-rose-500 font-black text-xl sm:text-2xl uppercase tracking-wider mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] max-w-md text-center">
+                             draggable="false"
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-amber-500 shadow-2xl pointer-events-none select-none" 
+                             onerror="this.src='https://placehold.co/160x160/f59e0b/ffffff?text=NOOB'">
+                        <span class="text-rose-500 font-black text-3xl sm:text-5xl uppercase tracking-widest mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] pointer-events-none select-none">
+                            NOOB!
+                        </span>
+                    </div>
+                `;
+            } else if (tierInfo.key === 'slower') {
+                icon.className = "mb-4 flex flex-col items-center justify-center pointer-events-none select-none";
+                icon.innerHTML = `
+                    <div class="flex flex-col items-center my-2 animate-bounce-short pointer-events-none select-none">
+                        <img src="https://spaceboys-shs.github.io/Abuneneaddmath67/leh.webp" 
+                             alt="Slower Response Face" 
+                             draggable="false"
+                             class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-rose-500 shadow-2xl pointer-events-none select-none" 
+                             onerror="this.src='https://placehold.co/160x160/ef4444/ffffff?text=LEH'">
+                        <span class="text-rose-500 font-black text-xl sm:text-2xl uppercase tracking-wider mt-3 animate-bounce drop-shadow-[0_4px_12px_rgba(244,63,94,0.9)] max-w-md text-center pointer-events-none select-none">
                             HOW CAN YOU SURVIVE FOR THIS 4 YEARS? DON'T MAKE YOUR TEACHER MISERABLE!
                         </span>
                     </div>
                 `;
-            } else {
-                icon.className = "w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-3xl mb-5 transition-transform duration-300 group-hover:scale-110";
-                icon.innerHTML = `<i class="fa-solid ${tierInfo.icon} ${tierInfo.textClass}"></i>`;
             }
 
-            title.innerHTML = `<span class="font-mono text-4xl sm:text-6xl font-extrabold ${tierInfo.textClass}">${reactionMs} <span class="text-2xl">ms</span></span>`;
-            desc.innerHTML = `<span class="text-white font-bold">${tierInfo.name} Rank</span> &bull; ${tierInfo.desc}<br><span class="text-xs text-slate-500 mt-2 block">Click anywhere to try again</span>`;
+            title.innerHTML = `<span class="font-mono text-4xl sm:text-6xl font-extrabold ${tierInfo.textClass} pointer-events-none">${reactionMs} <span class="text-2xl">ms</span></span>`;
+            desc.innerHTML = `<span class="text-white font-bold pointer-events-none">${tierInfo.name} Rank</span> &bull; ${tierInfo.desc}<br><span class="text-xs text-slate-500 mt-2 block pointer-events-none">Click anywhere to try again</span>`;
 
             resultBadge.innerText = tierInfo.name;
-            resultBadge.className = `absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg ${tierInfo.badgeClass}`;
+            resultBadge.className = `absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg pointer-events-none ${tierInfo.badgeClass}`;
             resultBadge.classList.remove('hidden');
 
             highlightTierCard(tierInfo.key);
@@ -950,7 +977,7 @@
                     icon: 'fa-crown',
                     colorClass: '#06b6d4'
                 };
-            } else if (ms <= 250) {
+            } else if (ms < 250) {
                 return {
                     key: 'good',
                     name: 'Good / Average',
@@ -1052,7 +1079,7 @@
 
             sessionHistory.forEach(s => {
                 if (s.time < 200) counts.elite++;
-                else if (s.time <= 250) counts.good++;
+                else if (s.time < 250) counts.good++;
                 else if (s.time <= 300) counts.typical++;
                 else counts.slower++;
             });
